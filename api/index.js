@@ -5,6 +5,7 @@ import cookieParser from 'cookie-parser';
 import mongoose from 'mongoose';
 import connectDb from './config/connectDB.js';
 import postsRouter from './routes/posts.route.js';
+import corsOptions from './config/corsOption.js';
 const app = express();
 
 const PORT = 5000;
