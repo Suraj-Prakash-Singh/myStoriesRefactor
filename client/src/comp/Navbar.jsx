@@ -8,7 +8,6 @@ import {
 } from 'react-icons/io5';
 const Navbar = () => {
   const currPath = useLocation().pathname;
-
   const activeClassName =
     'text-xl bg-slate-100 p-4 group rounded flex items-center space-x-2 font-semibold';
   const className =
