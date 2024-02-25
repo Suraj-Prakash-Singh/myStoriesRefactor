@@ -1,11 +1,20 @@
 import React from 'react';
-import { NavLink, useLocation } from 'react-router-dom';
+import { Link, NavLink, useLocation } from 'react-router-dom';
 import {
   IoHomeOutline,
   IoHome,
   IoPerson,
   IoPersonOutline,
 } from 'react-icons/io5';
+
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { HiOutlineDotsHorizontal } from 'react-icons/hi';
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from '@/components/ui/popover';
+
 const Navbar = () => {
   const currPath = useLocation().pathname;
   const activeClassName =
@@ -41,7 +50,28 @@ const Navbar = () => {
           </NavLink>
         </div>
       </div>
-      <div className="">Sign in</div>
+      <Popover>
+        <PopoverTrigger>
+          <div className="flex justify-between items-center p-3 hover:bg-slate-200 rounded-full">
+            <div className="flex items-center space-x-2">
+              <Avatar>
+                <AvatarImage src="https://github.com/shadcn.png" />
+                <AvatarFallback>CN</AvatarFallback>
+              </Avatar>
+              <div className="">
+                <p className="font-semibold text-lg">Dale Cabarle</p>
+                <p className="text-sm text-slate-500">@MrDaleCabarle</p>
+              </div>
+            </div>
+            <div className="justify-self-end text-2xl">
+              <HiOutlineDotsHorizontal />
+            </div>
+          </div>
+        </PopoverTrigger>
+        <PopoverContent>
+          <Link className="hover:underline font-semibold">Sign out</Link>
+        </PopoverContent>
+      </Popover>
     </div>
   );
 };
