@@ -3,7 +3,7 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { AiOutlineLike } from 'react-icons/ai';
 import { FaRegComment, FaRegHeart } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
-const Post = () => {
+const PostExcerpt = () => {
   return (
     <div className="p-4 flex cursor-pointer space-x-2 hover:bg-slate-100 border-t">
       <div>
@@ -37,4 +37,4 @@ const Post = () => {
   );
 };
 
-export default Post;
+export default PostExcerpt;
