@@ -37,7 +37,7 @@ A fulll stack app that lets you share your thoughts
 4. shandcn
 5. react-redux
 6. redux-toolkit
-7. TBA
+   <b>TBA</b>
 
 ##### api
 
@@ -46,6 +46,4 @@ A fulll stack app that lets you share your thoughts
 3. jsonwebtoken
 4. cookie-parser
 5. bcrypt
-6. TBA
-
-
+   <b>TBA</b>
