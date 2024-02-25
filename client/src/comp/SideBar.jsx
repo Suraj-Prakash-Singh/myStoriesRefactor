@@ -1,4 +1,5 @@
 import React from 'react';
+import { Button } from '@/components/ui/button';
 const SideBar = () => {
   return (
     <div className="flex flex-col space-y-4">
@@ -8,9 +9,7 @@ const SideBar = () => {
           Subscribe to unlock new features and if eligible, receive a share of
           ads revenue.
         </p>
-        <button className="bg-slate-900 text-white rounded-full px-4 py-2">
-          Subscribe
-        </button>
+        <Button className="rounded-full">Subscribe</Button>
       </div>
       <div className="p-4 bg-slate-200 rounded space-y-2">
         <h1 className="font-bold text-2xl">Topics for you:</h1>
