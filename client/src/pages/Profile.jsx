@@ -12,8 +12,12 @@ import {
   DialogTrigger,
 } from '@/components/ui/dialog';
 import PostExcerpt from '../features/posts/PostExcerpt';
+import { useSelector } from 'react-redux';
+import { selectPostById } from '../features/posts/postSlice';
 
 const Profile = () => {
+  useSelector;
+  selectPostById;
   return (
     <div>
       <div className="flex">
@@ -73,4 +77,8 @@ const Profile = () => {
   );
 };
 
+// selecting posts for certain user
+// i can see two different approach
+// 1. to create query that gets all the post of certain user
+// 2. in profile page use selector and pass the selectPosts and filter them by the userId
 export default Profile;
