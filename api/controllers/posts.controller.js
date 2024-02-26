@@ -5,7 +5,7 @@ export const getPosts = async (req, res) => {
     const posts = await Post.find();
     setTimeout(() => {
       res.json(posts);
-    }, 5000);
+    }, 2000);
   } catch (error) {
     res.sendStatus(500);
   }
