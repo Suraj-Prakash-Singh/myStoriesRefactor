@@ -27,10 +27,6 @@ export const postsSlice = apiSlice.injectEndpoints({
       query: (id) => `/posts/${id}`,
       providesTags: (res, err, args) => [{ type: 'Posts', id: args.id }],
     }),
-    getPostsByUser: builder.query({
-      query: (userId) => `/posts/user/${userId}`,
-      providesTags: (res, err, args) => [{ type: 'Posts' }],
-    }),
   }),
 });
 

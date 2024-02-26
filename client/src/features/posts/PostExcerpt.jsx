@@ -7,7 +7,6 @@ import { selectPostById } from './postSlice';
 
 const PostExcerpt = ({ postId }) => {
   const post = useSelector((state) => selectPostById(state, postId));
-  // console.log(post);
   return (
     <div className="p-4 flex cursor-pointer space-x-2 hover:bg-slate-100 border-t">
       <div>

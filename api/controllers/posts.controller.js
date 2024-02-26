@@ -3,7 +3,9 @@ import Post from '../model/Posts.model.js';
 export const getPosts = async (req, res) => {
   try {
     const posts = await Post.find();
-    res.json(posts);
+    setTimeout(() => {
+      res.json(posts);
+    }, 5000);
   } catch (error) {
     res.sendStatus(500);
   }

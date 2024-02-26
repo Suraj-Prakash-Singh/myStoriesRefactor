@@ -12,12 +12,22 @@ import {
   DialogTrigger,
 } from '@/components/ui/dialog';
 import PostExcerpt from '../features/posts/PostExcerpt';
-import { useSelector } from 'react-redux';
-import { selectPostById } from '../features/posts/postSlice';
+import { useGetPostsQuery } from '../features/posts/postSlice';
 
 const Profile = () => {
-  useSelector;
-  selectPostById;
+  const userId = '1daC31dyu67as';
+  const { isSuccess, isLoading, data: postsData } = useGetPostsQuery();
+  let content;
+  if (isLoading) return (content = <p>Loading...</p>);
+  if (isSuccess) {
+    const { entities, ids } = postsData;
+    const userPostsIds = ids.filter(
+      (postId) => entities[postId].userId === userId
+    );
+    content = userPostsIds.map((postId) => (
+      <PostExcerpt key={postId} postId={postId} />
+    ));
+  }
   return (
     <div>
       <div className="flex">
@@ -67,18 +77,13 @@ const Profile = () => {
       </div>
 
       {/* posts */}
-      <div>
-        <PostExcerpt />
-        <PostExcerpt />
-        <PostExcerpt />
-        <PostExcerpt />
-      </div>
+      <div>{content ?? ''}</div>
     </div>
   );
 };
 
 // selecting posts for certain user
 // i can see two different approach
-// 1. to create query that gets all the post of certain user
-// 2. in profile page use selector and pass the selectPosts and filter them by the userId
+// 1. in profile page use selector and pass the selectPosts and filter them by the userId
+// 2. to create query that gets all the post of certain user
 export default Profile;
