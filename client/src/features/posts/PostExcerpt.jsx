@@ -15,7 +15,7 @@ const PostExcerpt = ({ postId }) => {
           <AvatarFallback>CN</AvatarFallback>
         </Avatar>
       </div>
-      <div className="space-y-1">
+      <Link to={`/profile/posts/${postId}`} className="space-y-1">
         <div className="space-x-1 flex items-center">
           <Link className="font-semibold text-lg">Dale Cabarle</Link>
           <Link className="text-sm text-slate-500">@MrDaleCabarle</Link>
@@ -40,7 +40,7 @@ const PostExcerpt = ({ postId }) => {
             <p>44</p>
           </div>
         </div>
-      </div>
+      </Link>
     </div>
   );
 };
