@@ -26,7 +26,7 @@ const postsSchema = new Schema(
       type: String,
       require: true,
     },
-    likes: [{ userId: { require: true, type: String } }],
+    likes: [],
   },
   { timestamps: true }
 );

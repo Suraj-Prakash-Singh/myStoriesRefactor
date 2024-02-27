@@ -27,6 +27,17 @@ export const postsSlice = apiSlice.injectEndpoints({
       query: (id) => `/posts/${id}`,
       providesTags: (res, err, args) => [{ type: 'Posts', id: args.id }],
     }),
+    interactToPost: builder.mutation({
+      query: ({ postId, userId }) => ({
+        url: `/posts/${postId}`,
+        method: 'put',
+        body: { userId: userId },
+      }),
+      invalidatesTags: (res, err, args) => [
+        'Posts',
+        { type: 'Posts', id: args.userId },
+      ],
+    }),
   }),
 });
 
@@ -46,4 +57,5 @@ export const {
   (state) => selectPostsData(state) ?? initialState
 );
 
-export const { useGetPostsQuery, useGetPostQuery } = postsSlice;
+export const { useGetPostsQuery, useGetPostQuery, useInteractToPostMutation } =
+  postsSlice;

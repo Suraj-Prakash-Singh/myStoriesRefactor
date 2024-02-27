@@ -1,17 +1,63 @@
 import React from 'react';
-import { useGetPostQuery } from './postSlice';
-import { Link, useNavigate, useParams } from 'react-router-dom';
+import { useGetPostQuery, useInteractToPostMutation } from './postSlice';
+import { Link, useLocation, useNavigate, useParams } from 'react-router-dom';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { FaArrowLeft, FaRegComment, FaRegHeart, FaHeart } from 'react-icons/fa';
 import _404 from '@/src/pages/_404';
 import { HiOutlineDotsHorizontal } from 'react-icons/hi';
 import { formatDateTime } from '@/src/utils/formatDate';
+
 const Post = () => {
   const { postId } = useParams();
+  const [interactToPost] = useInteractToPostMutation();
   const nav = useNavigate();
+  const loc = useLocation();
+  // this is coming from userSlice
+  const userId = 'dambo';
+
+  // validation for postID
   if (!postId) return nav('/');
-  const { isError, isLoading, data: post } = useGetPostQuery(postId);
+
+  // query the post
+  const { isError, isLoading, isSuccess, data: post } = useGetPostQuery(postId);
+
+  // if post doesn't exist
   if (isError) return <_404 />;
+
+  // if exist, create a heartExcerpt
+  let heartReact;
+  if (isSuccess) {
+    const likeCounts = post.likes.length;
+    const userLikeThePost = post.likes.findIndex(
+      (likeUserId) => likeUserId === userId
+    );
+    if (userLikeThePost === -1) {
+      heartReact = (
+        <>
+          <div className="group-hover:bg-opacity-20 p-3 cursor-pointer rounded-full group-hover:bg-[#F91880]">
+            <FaRegHeart className="group-hover:text-[#F91880]" />
+          </div>
+          <p className="group-hover:text-[#F91880]">{likeCounts}</p>
+        </>
+      );
+    } else {
+      heartReact = (
+        <>
+          <div className="group-hover:bg-opacity-20 p-3 cursor-pointer rounded-full group-hover:bg-[#F91880]">
+            <FaHeart className="text-[#F91880]" />
+          </div>
+          <p className="text-[#F91880]">{likeCounts}</p>
+        </>
+      );
+    }
+  }
+
+  // handleLikeClick fn
+  const handleClickLike = async () => {
+    await interactToPost({ postId, userId });
+  };
+
+  // render ui
   return (
     <div>
       <div className="flex">
@@ -42,13 +88,11 @@ const Post = () => {
       </div>
       <div className="flex space-x-2 p-4 border-y text-xl justify-between">
         <div className="flex space-x-4">
-          <div className="text-slate-500 flex space-x-1 items-center">
-            <FaRegHeart />
-            {/* if current user is one of the person who like this. */}
-            {/* <div className="hover:bg-opacity-20 p-3 cursor-pointer rounded-full hover:bg-[#F91880]">
-              <FaHeart className="text-[#F91880]" />
-            </div> */}
-            <p>22k</p>
+          <div
+            className="text-slate-500 flex items-center group cursor-pointer"
+            onClick={handleClickLike}
+          >
+            {heartReact}
           </div>
           <div className="text-slate-500 flex space-x-1 items-center">
             <FaRegComment />
@@ -69,7 +113,7 @@ const Post = () => {
 
         <div className="flex-1 text-xl">
           <div>
-            <label for="comment" class="sr-only">
+            <label htmlFor="comment" className="sr-only">
               comment
             </label>
 
@@ -102,8 +146,8 @@ const Post = () => {
           </div>
           <Link to={`/profile/posts/${postId}`} className="space-y-1">
             <div className="space-x-1 flex items-center">
-              <Link className="font-semibold text-lg">Dale Cabarle</Link>
-              <Link className="text-sm text-slate-500">@MrDaleCabarle</Link>
+              <p className="font-semibold text-lg">Dale Cabarle</p>
+              <p className="text-sm text-slate-500">@MrDaleCabarle</p>
               <p className="text-sm text-slate-500">- 1h ago</p>
             </div>
 

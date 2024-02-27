@@ -17,8 +17,8 @@ const PostExcerpt = ({ postId }) => {
       </div>
       <Link to={`/profile/posts/${postId}`} className="space-y-1">
         <div className="space-x-1 flex items-center">
-          <Link className="font-semibold text-lg">Dale Cabarle</Link>
-          <Link className="text-sm text-slate-500">@MrDaleCabarle</Link>
+          <p className="font-semibold text-lg">Dale Cabarle</p>
+          <p className="text-sm text-slate-500">@MrDaleCabarle</p>
           <p className="text-sm text-slate-500">- 1h ago</p>
         </div>
         {post.content ? (
