@@ -2,15 +2,15 @@ import React from 'react';
 import { useGetPostQuery } from './postSlice';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { FaArrowLeft, FaRegComment, FaRegHeart } from 'react-icons/fa';
+import { FaArrowLeft, FaRegComment, FaRegHeart, FaHeart } from 'react-icons/fa';
 import _404 from '@/src/pages/_404';
 import { HiOutlineDotsHorizontal } from 'react-icons/hi';
+import { formatDateTime } from '@/src/utils/formatDate';
 const Post = () => {
   const { postId } = useParams();
   const nav = useNavigate();
   if (!postId) return nav('/');
   const { isError, isLoading, data: post } = useGetPostQuery(postId);
-
   if (isError) return <_404 />;
   return (
     <div>
@@ -32,21 +32,22 @@ const Post = () => {
             <Link className="font-semibold text-lg">Dale Cabarle</Link>
             <Link className="text-sm text-slate-500">@MrDaleCabarle</Link>
           </div>
-          {post?.content ? (
-            <p>{post.content}</p>
-          ) : (
-            <p>
-              Lorem ipsum dolor sit amet consectetur, adipisicing elit.
-              Distinctio quod cum mollitia, ducimus quo tenetur reiciendis
-              maiores magni numquam totam?
+          {post?.content ? <p className="text-lg">{post.content}</p> : null}
+          {post?.createdAt ? (
+            <p className="text-slate-500 text-sm">
+              {formatDateTime(post.createdAt)}
             </p>
-          )}
+          ) : null}
         </div>
       </div>
       <div className="flex space-x-2 p-4 border-y text-xl justify-between">
         <div className="flex space-x-4">
           <div className="text-slate-500 flex space-x-1 items-center">
             <FaRegHeart />
+            {/* if current user is one of the person who like this. */}
+            {/* <div className="hover:bg-opacity-20 p-3 cursor-pointer rounded-full hover:bg-[#F91880]">
+              <FaHeart className="text-[#F91880]" />
+            </div> */}
             <p>22k</p>
           </div>
           <div className="text-slate-500 flex space-x-1 items-center">

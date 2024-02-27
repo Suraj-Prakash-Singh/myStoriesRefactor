@@ -20,6 +20,11 @@ export const getPost = async (req, res) => {
   }
 };
 
+export const interactToPost = async (req, res) => {
+  const { postId, userId } = req.body;
+  if (!postId || !userId) return res.sendStatus(400);
+};
+
 export const createPost = async (req, res) => {
   const { content, userId } = req.body;
   await Post.create({ content, userId });
