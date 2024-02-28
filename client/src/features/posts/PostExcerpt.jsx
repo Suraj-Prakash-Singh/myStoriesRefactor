@@ -15,8 +15,10 @@ const PostExcerpt = ({ postId }) => {
   const [interactToPost] = useInteractToPostMutation();
   const userId = 'dambo';
   let heartReact;
+  let commentsCount;
   if (isSuccess) {
     const likeCounts = post.likes.length;
+    commentsCount = post.comments.length;
     const userLikeThePost = post.likes.findIndex(
       (likeUserId) => likeUserId === userId
     );
@@ -40,13 +42,16 @@ const PostExcerpt = ({ postId }) => {
       );
     }
   }
+
   const handleClickLike = async (e) => {
     e.stopPropagation();
     await interactToPost({ postId, userId });
   };
+
   const handleClickNav = () => {
     nav(`/profile/posts/${postId}`);
   };
+
   return (
     <div
       className="p-4 flex cursor-pointer space-x-2 hover:bg-slate-100 border-t"
@@ -85,7 +90,7 @@ const PostExcerpt = ({ postId }) => {
               <div className="group-hover:bg-opacity-20 p-3 cursor-pointer rounded-full group-hover:bg-[#1D9BF0]">
                 <FaRegComment className="group-hover:text-[#1D9BF0]" />
               </div>
-              <p className="group-hover:text-[#1D9BF0]">{44}</p>
+              <p className="group-hover:text-[#1D9BF0]">{commentsCount}</p>
             </>
           </div>
         </div>

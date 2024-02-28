@@ -31,3 +31,28 @@ export function formatDateTime(input) {
 
   return `${formattedTime} · ${formattedDate}`;
 }
+
+export function formatCommentDate(inputDateTime) {
+  const currentDate = new Date();
+  const inputDate = new Date(inputDateTime);
+
+  const timeDifferenceInSeconds = Math.floor((currentDate - inputDate) / 1000);
+  const timeDifferenceInMinutes = Math.floor(timeDifferenceInSeconds / 60);
+  const timeDifferenceInHours = Math.floor(timeDifferenceInMinutes / 60);
+  const timeDifferenceInDays = Math.floor(timeDifferenceInHours / 24);
+  const timeDifferenceInWeeks = Math.floor(timeDifferenceInDays / 7);
+
+  if (timeDifferenceInSeconds < 60) {
+    return `${timeDifferenceInSeconds}s `;
+  } else if (timeDifferenceInMinutes < 60) {
+    return `${timeDifferenceInMinutes}m `;
+  } else if (timeDifferenceInHours < 24) {
+    return `${timeDifferenceInHours}h `;
+  } else if (timeDifferenceInDays < 7) {
+    return `${timeDifferenceInDays}d `;
+  } else {
+    // If more than a week, format as "Feb 27, 2024"
+    const options = { month: 'short', day: 'numeric', year: 'numeric' };
+    return inputDate.toLocaleDateString('en-US', options);
+  }
+}

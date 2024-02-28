@@ -1,3 +1,4 @@
+import Comment from '../model/Comments.model.js';
 import Post from '../model/Posts.model.js';
 
 export const getPosts = async (req, res) => {
@@ -8,13 +9,14 @@ export const getPosts = async (req, res) => {
     res.sendStatus(500);
   }
 };
-export const getPost = async (req, res) => {
+export const getPost = async (req, res, next) => {
   const { id } = req.params;
   if (!id) return res.sendStatus(400);
 
   try {
     const post = await Post.findOne({ _id: id });
-    res.json(post);
+    req.post = post;
+    next();
   } catch (error) {
     res.sendStatus(500);
   }
@@ -50,6 +52,30 @@ export const interactToPost = async (req, res) => {
     console.log(error);
     res.sendStatus(500);
   }
+};
+
+export const getPostComments = async (req, res) => {
+  const post = req.post;
+  const { id } = req.params;
+
+  const comments = await Comment.find({ postId: id }).sort({ createdAt: -1 });
+  res.json({ ...post._doc, comments });
+};
+
+export const commentOnPost = async (req, res) => {
+  const { id } = req.params;
+  const { userId, content } = req.body;
+  if (!id || !userId || !content) return res.sendStatus(400);
+  const postExist = await Post.findById(id);
+  if (!postExist) return res.sendStatus(404);
+
+  // if post exist
+  try {
+    const newComment = { userId, content, postId: id };
+    // create the object
+    await Comment.create(newComment);
+    res.sendStatus(201);
+  } catch (error) {}
 };
 
 export const createPost = async (req, res) => {

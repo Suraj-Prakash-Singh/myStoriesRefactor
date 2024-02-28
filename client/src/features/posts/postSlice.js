@@ -35,13 +35,33 @@ export const postsSlice = apiSlice.injectEndpoints({
       }),
       invalidatesTags: (res, err, args) => [
         'Posts',
-        { type: 'Posts', id: args.userId },
+        { type: 'Posts', id: args.postId },
       ],
     }),
-    
+    commentOnPost: builder.mutation({
+      query: ({ postId, userId, content }) => ({
+        url: `/posts/${postId}`,
+        method: 'post',
+        body: { userId: userId, content },
+      }),
+      invalidatesTags: (res, err, args) => [
+        'Posts',
+        { type: 'Posts', id: args.postId },
+      ],
+    }),
   }),
 });
 
+// experiment: tangalin ang general tag ng posts and just invalidate the specific post
+
+// create a reducers:
+// getPostComments: should i create specific tag for only comment? yes
+// ["Comments"], {type: "Comments": postId}
+
+
+// commentOnPost
+
+//
 export const selectPostsResult = postsSlice.endpoints.getPosts.select();
 
 const selectPostsData = createSelector(

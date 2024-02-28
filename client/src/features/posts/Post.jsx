@@ -6,6 +6,7 @@ import { FaArrowLeft, FaRegComment, FaRegHeart, FaHeart } from 'react-icons/fa';
 import _404 from '@/src/pages/_404';
 import { HiOutlineDotsHorizontal } from 'react-icons/hi';
 import { formatDateTime } from '@/src/utils/formatDate';
+import Comment from './Comment';
 
 const Post = () => {
   const { postId } = useParams();
@@ -26,11 +27,19 @@ const Post = () => {
 
   // if exist, create a heartExcerpt
   let heartReact;
+  let commentsCount;
+  let commentsOnPost;
   if (isSuccess) {
     const likeCounts = post.likes.length;
+    commentsCount = post.comments.length;
+
+    commentsOnPost = post.comments.map((comment) => (
+      <Comment key={comment._id} comment={comment} postId={postId} />
+    ));
     const userLikeThePost = post.likes.findIndex(
       (likeUserId) => likeUserId === userId
     );
+
     if (userLikeThePost === -1) {
       heartReact = (
         <>
@@ -94,9 +103,13 @@ const Post = () => {
           >
             {heartReact}
           </div>
-          <div className="text-slate-500 flex space-x-1 items-center">
-            <FaRegComment />
-            <p>44</p>
+
+          {/* comments count */}
+          <div className="text-slate-500 flex space-x-1 items-center group cursor-pointer">
+            <div className="group-hover:bg-opacity-20 p-3 cursor-pointer rounded-full group-hover:bg-[#1D9BF0]">
+              <FaRegComment className="group-hover:text-[#1D9BF0]" />
+            </div>
+            <p className="group-hover:text-[#1D9BF0]">{commentsCount}</p>
           </div>
         </div>
         <div className="flex items-center">
@@ -105,7 +118,7 @@ const Post = () => {
       </div>
 
       {/* post your reply */}
-      <div className="p-4 flex space-x-4">
+      <div className="p-4 flex space-x-4 border-b">
         <Avatar>
           <AvatarImage src="https://github.com/shadcn.png" />
           <AvatarFallback>CN</AvatarFallback>
@@ -136,39 +149,7 @@ const Post = () => {
       </div>
 
       {/* comments */}
-      <div className="border-t">
-        <div className="p-4 flex cursor-pointer space-x-2 hover:bg-slate-100 border-t">
-          <div>
-            <Avatar>
-              <AvatarImage src="https://github.com/shadcn.png" />
-              <AvatarFallback>CN</AvatarFallback>
-            </Avatar>
-          </div>
-          <Link to={`/profile/posts/${postId}`} className="space-y-1">
-            <div className="space-x-1 flex items-center">
-              <p className="font-semibold text-lg">Dale Cabarle</p>
-              <p className="text-sm text-slate-500">@MrDaleCabarle</p>
-              <p className="text-sm text-slate-500">- 1h ago</p>
-            </div>
-
-            <p>
-              Lorem ipsum dolor sit amet consectetur, adipisicing elit.
-              Distinctio quod cum mollitia, ducimus quo tenetur reiciendis
-              maiores magni numquam totam?
-            </p>
-            <div className="flex space-x-2">
-              <div className="text-slate-500 flex space-x-1 items-center">
-                <FaRegHeart />
-                <p>22k</p>
-              </div>
-              <div className="text-slate-500 flex space-x-1 items-center">
-                <FaRegComment />
-                <p>44</p>
-              </div>
-            </div>
-          </Link>
-        </div>
-      </div>
+      {commentsOnPost}
     </div>
   );
 };
