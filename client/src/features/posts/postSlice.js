@@ -58,7 +58,6 @@ export const postsSlice = apiSlice.injectEndpoints({
 // getPostComments: should i create specific tag for only comment? yes
 // ["Comments"], {type: "Comments": postId}
 
-
 // commentOnPost
 
 //
@@ -78,5 +77,9 @@ export const {
   (state) => selectPostsData(state) ?? initialState
 );
 
-export const { useGetPostsQuery, useGetPostQuery, useInteractToPostMutation } =
-  postsSlice;
+export const {
+  useGetPostsQuery,
+  useGetPostQuery,
+  useInteractToPostMutation,
+  useCommentOnPostMutation,
+} = postsSlice;

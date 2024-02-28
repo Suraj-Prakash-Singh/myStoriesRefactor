@@ -7,6 +7,7 @@ import _404 from '@/src/pages/_404';
 import { HiOutlineDotsHorizontal } from 'react-icons/hi';
 import { formatDateTime } from '@/src/utils/formatDate';
 import Comment from './Comment';
+import PostComment from './PostComment';
 
 const Post = () => {
   const { postId } = useParams();
@@ -118,35 +119,7 @@ const Post = () => {
       </div>
 
       {/* post your reply */}
-      <div className="p-4 flex space-x-4 border-b">
-        <Avatar>
-          <AvatarImage src="https://github.com/shadcn.png" />
-          <AvatarFallback>CN</AvatarFallback>
-        </Avatar>
-
-        <div className="flex-1 text-xl">
-          <div>
-            <label htmlFor="comment" className="sr-only">
-              comment
-            </label>
-
-            <div className="overflow-hidden">
-              <textarea
-                id="comment"
-                className="w-full min-h-[100px]  h-auto resize-none focus:border-none border-none focus:outline-none px-0 align-top sm:text-lg"
-                rows={4}
-                placeholder="Post your reply"
-              />
-
-              <div className="flex items-center justify-end gap-2 py-3">
-                <button className="px-8 mt-2 py-2 rounded-full bg-blue-300 text-white">
-                  Post
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+      <PostComment postId={postId} userId={userId} />
 
       {/* comments */}
       {commentsOnPost}

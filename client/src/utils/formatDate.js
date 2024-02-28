@@ -29,7 +29,7 @@ export function formatDateTime(input) {
   const year = inputDate.getFullYear();
   const formattedDate = `${month} ${day}, ${year}`;
 
-  return `${formattedTime} · ${formattedDate}`;
+  return `${formattedTime} os ${formattedDate}`;
 }
 
 export function formatCommentDate(inputDateTime) {
@@ -41,6 +41,10 @@ export function formatCommentDate(inputDateTime) {
   const timeDifferenceInHours = Math.floor(timeDifferenceInMinutes / 60);
   const timeDifferenceInDays = Math.floor(timeDifferenceInHours / 24);
   const timeDifferenceInWeeks = Math.floor(timeDifferenceInDays / 7);
+
+  if (timeDifferenceInSeconds === 0) {
+    return 'just now';
+  }
 
   if (timeDifferenceInSeconds < 60) {
     return `${timeDifferenceInSeconds}s `;

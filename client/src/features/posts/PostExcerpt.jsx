@@ -8,6 +8,7 @@ import {
   useGetPostQuery,
   useInteractToPostMutation,
 } from './postSlice';
+import { formatCommentDate } from '@/src/utils/formatDate';
 
 const PostExcerpt = ({ postId }) => {
   const { data: post, isSuccess } = useGetPostQuery(postId);
@@ -16,7 +17,10 @@ const PostExcerpt = ({ postId }) => {
   const userId = 'dambo';
   let heartReact;
   let commentsCount;
+  let timeAgo;
   if (isSuccess) {
+    const createdAt = post.createdAt;
+    timeAgo = formatCommentDate(createdAt);
     const likeCounts = post.likes.length;
     commentsCount = post.comments.length;
     const userLikeThePost = post.likes.findIndex(
@@ -67,7 +71,7 @@ const PostExcerpt = ({ postId }) => {
         <div className="space-x-1 flex items-center">
           <p className="font-semibold text-lg">Dale Cabarle</p>
           <p className="text-sm text-slate-500">@MrDaleCabarle</p>
-          <p className="text-sm text-slate-500">- 1h ago</p>
+          <p className="text-sm text-slate-500">· {timeAgo}</p>
         </div>
         {post?.content ? (
           <p>{post?.content}</p>
