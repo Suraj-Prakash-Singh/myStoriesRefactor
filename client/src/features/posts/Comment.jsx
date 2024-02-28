@@ -16,10 +16,31 @@ import {
 } from '@/components/ui/popover';
 import { HiOutlineDotsHorizontal } from 'react-icons/hi';
 
-const Comment = ({ postId, comment, currentUserId }) => {
+const Comment = ({ postId, comment, currentUserId, postUserId }) => {
   const createdAt = comment.createdAt;
   const timeAgo = formatCommentDate(createdAt);
-  const commentUserId = 'dambo'; // change when i build the user schema
+  const commentUserId = comment.userId;
+
+  // display delete? if user owned post or comment
+  let displayDelete;
+  if (currentUserId === commentUserId || currentUserId === postUserId) {
+    displayDelete = (
+      <li className="text-red-500 space-x-2 cursor-pointer hover:bg-slate-50 flex p-4 items-center">
+        <FaTrashAlt />
+        <p>Delete</p>
+      </li>
+    );
+  }
+
+  let displayEdit;
+  if (currentUserId === commentUserId) {
+    displayEdit = (
+      <li className=" space-x-2 cursor-pointer hover:bg-slate-100 flex p-4 items-center">
+        <FaRegEdit />
+        <p>Edit</p>
+      </li>
+    );
+  }
 
   return (
     <div className="">
@@ -57,14 +78,8 @@ const Comment = ({ postId, comment, currentUserId }) => {
             </PopoverTrigger>
             <PopoverContent className="p-0">
               <ul className="font-semibold">
-                <li className="text-red-500 space-x-2 cursor-pointer hover:bg-slate-50 flex p-4 items-center">
-                  <FaTrashAlt />
-                  <p>Delete</p>
-                </li>
-                <li className=" space-x-2 cursor-pointer hover:bg-slate-100 flex p-4 items-center">
-                  <FaRegEdit />
-                  <p>Edit</p>
-                </li>
+                {displayDelete ?? null}
+                {displayEdit ?? null}
                 <li className="space-x-2 cursor-pointer hover:bg-slate-100 flex p-4 items-center">
                   <FaVolumeMute />
                   <p>Mute</p>

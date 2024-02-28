@@ -15,7 +15,7 @@ const Post = () => {
   const nav = useNavigate();
   const loc = useLocation();
   // this is coming from userSlice
-  const userId = 'dambo';
+  const userId = 'ponga';
 
   // validation for postID
   if (!postId) return nav('/');
@@ -40,6 +40,7 @@ const Post = () => {
         comment={comment}
         currentUserId={userId}
         postId={postId}
+        postUserId={post.userId}
       />
     ));
     const userLikeThePost = post.likes.findIndex(
