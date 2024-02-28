@@ -35,7 +35,12 @@ const Post = () => {
     commentsCount = post.comments.length;
 
     commentsOnPost = post.comments.map((comment) => (
-      <Comment key={comment._id} comment={comment} postId={postId} />
+      <Comment
+        key={comment._id}
+        comment={comment}
+        currentUserId={userId}
+        postId={postId}
+      />
     ));
     const userLikeThePost = post.likes.findIndex(
       (likeUserId) => likeUserId === userId

@@ -1,11 +1,26 @@
 import React from 'react';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Link } from 'react-router-dom';
-import { FaRegComment, FaRegHeart } from 'react-icons/fa';
+import {
+  FaRegComment,
+  FaRegHeart,
+  FaTrashAlt,
+  FaRegEdit,
+  FaVolumeMute,
+} from 'react-icons/fa';
 import { formatCommentDate } from '@/src/utils/formatDate';
-const Comment = ({ postId, comment }) => {
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from '@/components/ui/popover';
+import { HiOutlineDotsHorizontal } from 'react-icons/hi';
+
+const Comment = ({ postId, comment, currentUserId }) => {
   const createdAt = comment.createdAt;
   const timeAgo = formatCommentDate(createdAt);
+  const commentUserId = 'dambo'; // change when i build the user schema
+
   return (
     <div className="">
       <div className="p-4 flex cursor-pointer space-x-2 hover:bg-slate-100 border-t">
@@ -35,6 +50,29 @@ const Comment = ({ postId, comment }) => {
             </div>
           </div>
         </Link>
+        <div className="flex-1 flex justify-end items-start">
+          <Popover>
+            <PopoverTrigger className="p-4 hover:bg-[#1D9BF0] rounded-full hover:text-[#1D9BF0] hover:bg-opacity-20">
+              <HiOutlineDotsHorizontal className="text-lg" />
+            </PopoverTrigger>
+            <PopoverContent className="p-0">
+              <ul className="font-semibold">
+                <li className="text-red-500 space-x-2 cursor-pointer hover:bg-slate-50 flex p-4 items-center">
+                  <FaTrashAlt />
+                  <p>Delete</p>
+                </li>
+                <li className=" space-x-2 cursor-pointer hover:bg-slate-100 flex p-4 items-center">
+                  <FaRegEdit />
+                  <p>Edit</p>
+                </li>
+                <li className="space-x-2 cursor-pointer hover:bg-slate-100 flex p-4 items-center">
+                  <FaVolumeMute />
+                  <p>Mute</p>
+                </li>
+              </ul>
+            </PopoverContent>
+          </Popover>
+        </div>
       </div>
     </div>
   );

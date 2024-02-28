@@ -4,14 +4,15 @@ import { useCommentOnPostMutation } from './postSlice';
 
 const PostComment = ({ postId, userId }) => {
   const [comment, setComment] = useState('');
-  const [commentOnPostMutation, ] = useCommentOnPostMutation();
+  const [commentOnPostMutation] = useCommentOnPostMutation();
   const canSave = Boolean(comment);
 
   const handleClickPost = async () => {
     await commentOnPostMutation({ postId, userId, content: comment });
+    setComment('');
   };
   return (
-    <div className="p-4 flex space-x-4 border-b">
+    <div className="p-4 flex space-x-4">
       <Avatar>
         <AvatarImage src="https://github.com/shadcn.png" />
         <AvatarFallback>CN</AvatarFallback>
