@@ -38,6 +38,7 @@ export const postsSlice = apiSlice.injectEndpoints({
         { type: 'Posts', id: args.userId },
       ],
     }),
+    
   }),
 });
 

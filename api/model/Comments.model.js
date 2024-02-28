@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 const Schema = mongoose.Schema;
 
-const postsSchema = new Schema(
+const commentsSchema = new Schema(
   {
     content: {
       type: String,
@@ -11,10 +11,12 @@ const postsSchema = new Schema(
       type: String,
       require: true,
     },
-    likes: [],
+    postId: {
+      type: String,
+      require: true,
+    },
   },
   { timestamps: true }
 );
 
-const Post = mongoose.model('Post', postsSchema);
-export default Post;
+export const Comment = mongoose.model('Comment', commentsSchema);
