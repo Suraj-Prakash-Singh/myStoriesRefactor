@@ -1,7 +1,7 @@
 import React from 'react';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { FaHeart, FaRegComment, FaRegHeart } from 'react-icons/fa';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import {
   selectPostById,
@@ -11,6 +11,7 @@ import {
 
 const PostExcerpt = ({ postId }) => {
   const { data: post, isSuccess } = useGetPostQuery(postId);
+  const nav = useNavigate();
   const [interactToPost] = useInteractToPostMutation();
   const userId = 'dambo';
   let heartReact;
@@ -39,18 +40,25 @@ const PostExcerpt = ({ postId }) => {
       );
     }
   }
-  const handleClickLike = async () => {
+  const handleClickLike = async (e) => {
+    e.stopPropagation();
     await interactToPost({ postId, userId });
   };
+  const handleClickNav = () => {
+    nav(`/profile/posts/${postId}`);
+  };
   return (
-    <div className="p-4 flex cursor-pointer space-x-2 hover:bg-slate-100 border-t">
+    <div
+      className="p-4 flex cursor-pointer space-x-2 hover:bg-slate-100 border-t"
+      onClick={handleClickNav}
+    >
       <div>
         <Avatar>
           <AvatarImage src="https://github.com/shadcn.png" />
           <AvatarFallback>CN</AvatarFallback>
         </Avatar>
       </div>
-      <Link to={`/profile/posts/${postId}`} className="space-y-1">
+      <div className="space-y-1">
         <div className="space-x-1 flex items-center">
           <p className="font-semibold text-lg">Dale Cabarle</p>
           <p className="text-sm text-slate-500">@MrDaleCabarle</p>
@@ -72,12 +80,16 @@ const PostExcerpt = ({ postId }) => {
           >
             {heartReact}
           </div>
-          <div className="text-slate-500 flex space-x-1 items-center">
-            <FaRegComment />
-            <p>44</p>
+          <div className="text-slate-500 flex space-x-1 items-center group">
+            <>
+              <div className="group-hover:bg-opacity-20 p-3 cursor-pointer rounded-full group-hover:bg-[#1D9BF0]">
+                <FaRegComment className="group-hover:text-[#1D9BF0]" />
+              </div>
+              <p className="group-hover:text-[#1D9BF0]">{44}</p>
+            </>
           </div>
         </div>
-      </Link>
+      </div>
     </div>
   );
 };
