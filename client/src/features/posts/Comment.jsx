@@ -14,7 +14,18 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from '@/components/ui/popover';
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+  DialogFooter,
+} from '@/components/ui/dialog';
+
 import { HiOutlineDotsHorizontal } from 'react-icons/hi';
+import { Button } from '@/components/ui/button';
 
 const Comment = ({ postId, comment, currentUserId, postUserId }) => {
   const createdAt = comment.createdAt;
@@ -22,13 +33,30 @@ const Comment = ({ postId, comment, currentUserId, postUserId }) => {
   const commentUserId = comment.userId;
 
   // display delete? if user owned post or comment
+
   let displayDelete;
   if (currentUserId === commentUserId || currentUserId === postUserId) {
     displayDelete = (
-      <li className="text-red-500 space-x-2 cursor-pointer hover:bg-slate-50 flex p-4 items-center">
-        <FaTrashAlt />
-        <p>Delete</p>
-      </li>
+      <Dialog>
+        <DialogTrigger className="w-full">
+          <li className="text-red-500 space-x-2 cursor-pointer w-full hover:bg-slate-50 flex p-4 items-center">
+            <FaTrashAlt />
+            <p>Delete</p>
+          </li>
+        </DialogTrigger>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Are you absolutely sure?</DialogTitle>
+            <DialogDescription>
+              This action cannot be undone. This will permanently delete your
+              account and remove your data from our servers.
+            </DialogDescription>
+          </DialogHeader>
+          <DialogFooter>
+            <Button variant="destructive">Delete</Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     );
   }
 
