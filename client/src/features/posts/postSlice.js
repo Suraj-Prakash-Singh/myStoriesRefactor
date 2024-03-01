@@ -83,4 +83,5 @@ export const {
   useGetPostQuery,
   useInteractToPostMutation,
   useCommentOnPostMutation,
+  useDeleteCommentOnPostMutation,
 } = postsSlice;
