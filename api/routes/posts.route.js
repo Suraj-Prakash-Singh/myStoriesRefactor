@@ -6,6 +6,7 @@ import {
   interactToPost,
   getPostComments,
   commentOnPost,
+  deleteCommentOnPost,
 } from '../controllers/posts.controller.js';
 const router = express.Router();
 
@@ -14,6 +15,6 @@ router.post('/', createPost);
 router.get('/:id', getPost, getPostComments);
 router.put('/:id', interactToPost);
 router.post('/:id', commentOnPost);
-router.delete('/:id/comments/:commentId', commentOnPost);
+router.delete('/:id/comments/:commentId', deleteCommentOnPost);
 
 export default router;

@@ -50,7 +50,7 @@ export const postsSlice = apiSlice.injectEndpoints({
       ],
     }),
     deleteCommentOnPost: builder.mutation({
-      query: (commentId, postId) => ({
+      query: ({ postId, commentId }) => ({
         url: `posts/${postId}/comments/${commentId}`,
         method: 'delete',
       }),

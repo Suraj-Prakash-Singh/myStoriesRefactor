@@ -26,17 +26,19 @@ import {
 
 import { HiOutlineDotsHorizontal } from 'react-icons/hi';
 import { Button } from '@/components/ui/button';
+import { useDeleteCommentOnPostMutation } from './postSlice';
 
 const Comment = ({ postId, comment, currentUserId, postUserId }) => {
+  const [deleteCommentOnPost] = useDeleteCommentOnPostMutation();
+
   const createdAt = comment.createdAt;
   const timeAgo = formatCommentDate(createdAt);
   const commentUserId = comment.userId;
 
-  const onClickHandlerForDeleteComment = asyncost() => {
-    // import the action from slice
-    // pass the currentUserId
-  }
-  
+  const onClickHandlerForDeleteComment = async () => {
+    await deleteCommentOnPost({ postId, commentId: comment._id });
+  };
+
   // display delete? if user owned post or comment
   let displayDelete;
   if (currentUserId === commentUserId || currentUserId === postUserId) {
@@ -52,12 +54,17 @@ const Comment = ({ postId, comment, currentUserId, postUserId }) => {
           <DialogHeader>
             <DialogTitle>Are you absolutely sure?</DialogTitle>
             <DialogDescription>
-              This action cannot be undone. This will permanently delete your
-              account and remove your data from our servers.
+              This action cannot be undone. This will permanently delete this
+              comment and remove the data from our servers.
             </DialogDescription>
           </DialogHeader>
           <DialogFooter>
-            <Button variant="destructive">Delete</Button>
+            <Button
+              onClick={onClickHandlerForDeleteComment}
+              variant="destructive"
+            >
+              Delete
+            </Button>
           </DialogFooter>
         </DialogContent>
       </Dialog>
