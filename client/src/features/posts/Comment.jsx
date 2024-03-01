@@ -32,8 +32,12 @@ const Comment = ({ postId, comment, currentUserId, postUserId }) => {
   const timeAgo = formatCommentDate(createdAt);
   const commentUserId = comment.userId;
 
+  const onClickHandlerForDeleteComment = asyncost() => {
+    // import the action from slice
+    // pass the currentUserId
+  }
+  
   // display delete? if user owned post or comment
-
   let displayDelete;
   if (currentUserId === commentUserId || currentUserId === postUserId) {
     displayDelete = (

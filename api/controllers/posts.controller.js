@@ -75,7 +75,9 @@ export const commentOnPost = async (req, res) => {
     // create the object
     await Comment.create(newComment);
     res.sendStatus(201);
-  } catch (error) {}
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 export const createPost = async (req, res) => {
