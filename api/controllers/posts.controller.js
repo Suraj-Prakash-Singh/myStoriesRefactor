@@ -81,10 +81,21 @@ export const commentOnPost = async (req, res) => {
 };
 
 export const deleteCommentOnPost = async (req, res) => {
-  const { commentId, id } = req.params;
-  if (!commentId || !id) return res.sendStatus(400);
+  const { commentId, postId: postId } = req.params;
+  if (!commentId || !postId) return res.sendStatus(400);
   try {
     await Comment.findByIdAndDelete(commentId);
+    res.sendStatus(200);
+  } catch (error) {
+    res.json(error);
+  }
+};
+
+export const editCommentOnPost = async (req, res) => {
+  const { commentId, id: postId } = req.params;
+  if (!commentId || !postId) return res.sendStatus(400);
+  try {
+    await Comment.findByIdAndUpdate(commentId, {});
     res.sendStatus(200);
   } catch (error) {
     res.json(error);

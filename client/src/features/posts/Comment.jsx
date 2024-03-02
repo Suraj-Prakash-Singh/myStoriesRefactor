@@ -27,6 +27,8 @@ import {
 import { HiOutlineDotsHorizontal } from 'react-icons/hi';
 import { Button } from '@/components/ui/button';
 import { useDeleteCommentOnPostMutation } from './postSlice';
+import { Label } from '@/components/ui/label';
+import { Input } from '@/components/ui/input';
 
 const Comment = ({ postId, comment, currentUserId, postUserId }) => {
   const [deleteCommentOnPost] = useDeleteCommentOnPostMutation();
@@ -74,10 +76,37 @@ const Comment = ({ postId, comment, currentUserId, postUserId }) => {
   let displayEdit;
   if (currentUserId === commentUserId) {
     displayEdit = (
-      <li className=" space-x-2 cursor-pointer hover:bg-slate-100 flex p-4 items-center">
-        <FaRegEdit />
-        <p>Edit</p>
-      </li>
+      <Dialog>
+        <DialogTrigger asChild>
+          <li className=" space-x-2 cursor-pointer hover:bg-slate-100 flex p-4 items-center">
+            <FaRegEdit />
+            <p>Edit</p>
+          </li>
+        </DialogTrigger>
+        <DialogContent className="sm:max-w-[425px]">
+          <DialogHeader>
+            <DialogTitle>Edit Comment</DialogTitle>
+            <DialogDescription>
+              Make changes to your posted comment. Click save when you're done.
+            </DialogDescription>
+          </DialogHeader>
+          <div className="grid gap-4 py-4">
+            <div className="grid grid-cols-4 items-center gap-4">
+              <Label htmlFor="name" className="text-right">
+                Name
+              </Label>
+              <Input
+                id="name"
+                defaultValue="Pedro Duarte"
+                className="col-span-3"
+              />
+            </div>
+          </div>
+          <DialogFooter>
+            <Button type="submit">Save changes</Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     );
   }
 
