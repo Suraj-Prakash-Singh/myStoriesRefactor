@@ -92,11 +92,12 @@ const Comment = ({ postId, comment, currentUserId, postUserId }) => {
           </DialogHeader>
           <div className="grid gap-4 py-4">
             <div className="grid grid-cols-4 items-center gap-4">
-              <Label htmlFor="name" className="text-right">
-                Name
+              <Label htmlFor="content" className="text-right">
+                Content
               </Label>
+              Content
               <Input
-                id="name"
+                id="Content"
                 defaultValue="Pedro Duarte"
                 className="col-span-3"
               />
