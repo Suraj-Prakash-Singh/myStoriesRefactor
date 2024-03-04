@@ -21,5 +21,5 @@ create endpoint @api
 status: <b>DONE</b>
 <br>
 
-
-init editComment 
+init editComment
+after editComment -> perform crud for posts
