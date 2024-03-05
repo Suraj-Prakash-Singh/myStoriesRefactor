@@ -54,14 +54,13 @@ export const interactToPost = async (req, res) => {
   }
 };
 
-export const getPostComments = async (req, res) => {
-  const post = req.post;
-  const { id } = req.params;
-
-  const comments = await Comment.find({ postId: id }).sort({ createdAt: -1 });
-  res.json({ ...post._doc, comments });
+export const createPost = async (req, res) => {
+  const { content, userId } = req.body;
+  await Post.create({ content, userId });
+  res.status(201).json({ message: 'Successfully created' });
 };
 
+// CRUD ON COMMENT
 export const commentOnPost = async (req, res) => {
   const { id } = req.params;
   const { userId, content } = req.body;
@@ -80,15 +79,12 @@ export const commentOnPost = async (req, res) => {
   }
 };
 
-export const deleteCommentOnPost = async (req, res) => {
-  const { commentId, postId: postId } = req.params;
-  if (!commentId || !postId) return res.sendStatus(400);
-  try {
-    await Comment.findByIdAndDelete(commentId);
-    res.sendStatus(200);
-  } catch (error) {
-    res.json(error);
-  }
+export const getPostComments = async (req, res) => {
+  const post = req.post;
+  const { id } = req.params;
+
+  const comments = await Comment.find({ postId: id }).sort({ createdAt: -1 });
+  res.json({ ...post._doc, comments });
 };
 
 export const editCommentOnPost = async (req, res) => {
@@ -103,8 +99,13 @@ export const editCommentOnPost = async (req, res) => {
   }
 };
 
-export const createPost = async (req, res) => {
-  const { content, userId } = req.body;
-  await Post.create({ content, userId });
-  res.status(201).json({ message: 'Successfully created' });
+export const deleteCommentOnPost = async (req, res) => {
+  const { commentId, postId: postId } = req.params;
+  if (!commentId || !postId) return res.sendStatus(400);
+  try {
+    await Comment.findByIdAndDelete(commentId);
+    res.sendStatus(200);
+  } catch (error) {
+    res.json(error);
+  }
 };
