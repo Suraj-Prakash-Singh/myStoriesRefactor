@@ -23,7 +23,8 @@ status: <b>DONE</b>
 
 init editComment
 Bugs:
-didn't update the time ago
-didin't close all the poppers
+
+- didn't update the time ago : <b>DONE</b>
+- didin't close all the poppers : <b>DONE</b>
 
 after editComment -> perform crud for posts

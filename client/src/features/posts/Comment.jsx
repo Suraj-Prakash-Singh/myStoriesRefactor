@@ -22,6 +22,7 @@ import {
   DialogTitle,
   DialogTrigger,
   DialogFooter,
+  DialogClose,
 } from '@/components/ui/dialog';
 
 import { HiOutlineDotsHorizontal } from 'react-icons/hi';
@@ -36,6 +37,7 @@ const Comment = ({ postId, comment, currentUserId, postUserId }) => {
   const [deleteCommentOnPost] = useDeleteCommentOnPostMutation();
   const [editCommentOnPost] = useEditCommentOnPostMutation();
   const [currentComment, setCurrentComment] = useState(comment?.content || '');
+  const popOverRef = useRef();
 
   const updatedAt = comment.updatedAt;
   const timeAgo = formatCommentDate(updatedAt);
@@ -51,7 +53,9 @@ const Comment = ({ postId, comment, currentUserId, postUserId }) => {
       commentId: comment._id,
       content: currentComment,
     });
+    popOverRef.current.click();
   };
+
   // display delete? if user owned post or comment
   let displayDelete;
   if (currentUserId === commentUserId || currentUserId === postUserId) {
@@ -107,14 +111,16 @@ const Comment = ({ postId, comment, currentUserId, postUserId }) => {
             onChange={(e) => setCurrentComment(e.target.value)}
           />
           <DialogFooter>
-            <Button
-              type="submit"
-              disabled={currentComment ? false : true}
-              className="disabled:opacity-50"
-              onClick={onClickHandlerForEditComment}
-            >
-              Save changes
-            </Button>
+            <DialogClose>
+              <Button
+                type="submit"
+                disabled={currentComment ? false : true}
+                className="disabled:opacity-50"
+                onClick={onClickHandlerForEditComment}
+              >
+                Save changes
+              </Button>
+            </DialogClose>
           </DialogFooter>
         </DialogContent>
       </Dialog>
@@ -152,7 +158,10 @@ const Comment = ({ postId, comment, currentUserId, postUserId }) => {
         </Link>
         <div className="flex-1 flex justify-end items-start">
           <Popover>
-            <PopoverTrigger className="p-4 hover:bg-[#1D9BF0] rounded-full hover:text-[#1D9BF0] hover:bg-opacity-20">
+            <PopoverTrigger
+              className="p-4 hover:bg-[#1D9BF0] rounded-full hover:text-[#1D9BF0] hover:bg-opacity-20"
+              ref={popOverRef}
+            >
               <HiOutlineDotsHorizontal className="text-lg" />
             </PopoverTrigger>
             <PopoverContent className="p-0">
