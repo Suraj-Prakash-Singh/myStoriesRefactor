@@ -1,6 +1,15 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { useCreatePostMutation } from './postSlice';
 const WritePost = () => {
+  const [post, setPost] = useState('');
+  const [createPost] = useCreatePostMutation();
+
+  const userId = 'ponga';
+  const onClickHandlerForCreatePost = async () => {
+    await createPost({ content: post, userId });
+    setPost('');
+  };
   return (
     <div className=" p-4 space-y-4">
       <div className="flex space-x-2">
@@ -8,14 +17,22 @@ const WritePost = () => {
           <AvatarImage src="https://github.com/shadcn.png" />
           <AvatarFallback>CN</AvatarFallback>
         </Avatar>
-        <input
-          type="text"
-          className="w-full place-self-start p-4 rounded"
-          placeholder="What's happening?!"
+        <textarea
+          value={post}
+          onChange={(e) => {
+            setPost(e.target.value);
+          }}
+          className="w-full min-h-[100px]  h-auto resize-none focus:border-none border-none focus:outline-none px-0 align-top sm:text-lg"
+          rows={4}
+          placeholder="Create a post"
         />
       </div>
       <div className="border-t flex justify-end">
-        <button className="px-8 mt-2 py-2 rounded-full bg-blue-300 text-white">
+        <button
+          disabled={post ? false : true}
+          className="px-8 mt-2 py-2 rounded-full bg-blue-500 cursor-pointer hover:bg-blue-600 disabled:cursor-not-allowed disabled:bg-blue-300 text-white"
+          onClick={onClickHandlerForCreatePost}
+        >
           Post
         </button>
       </div>
