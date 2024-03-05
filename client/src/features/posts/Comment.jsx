@@ -36,11 +36,9 @@ const Comment = ({ postId, comment, currentUserId, postUserId }) => {
   const [deleteCommentOnPost] = useDeleteCommentOnPostMutation();
   const [editCommentOnPost] = useEditCommentOnPostMutation();
   const [currentComment, setCurrentComment] = useState(comment?.content || '');
-  const nav = useNavigate();
-  const currPath = useLocation();
 
-  const createdAt = comment.createdAt;
-  const timeAgo = formatCommentDate(createdAt);
+  const updatedAt = comment.updatedAt;
+  const timeAgo = formatCommentDate(updatedAt);
   const commentUserId = comment.userId;
 
   const onClickHandlerForDeleteComment = async () => {
@@ -53,8 +51,6 @@ const Comment = ({ postId, comment, currentUserId, postUserId }) => {
       commentId: comment._id,
       content: currentComment,
     });
-    console.log(currPath.pathname);
-    nav(currPath.pathname);
   };
   // display delete? if user owned post or comment
   let displayDelete;
