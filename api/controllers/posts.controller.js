@@ -90,7 +90,7 @@ export const getPostComments = async (req, res) => {
 export const editCommentOnPost = async (req, res) => {
   const { commentId, id: postId } = req.params;
   const { content: newContent } = req.body;
-  if (!commentId || !postId || !content) return res.sendStatus(400);
+  if (!commentId || !postId || !newContent) return res.sendStatus(400);
   try {
     await Comment.findByIdAndUpdate(commentId, { content: newContent });
     res.sendStatus(200);

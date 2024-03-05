@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useRef, useState } from 'react';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import {
   FaRegComment,
   FaRegHeart,
@@ -26,12 +26,18 @@ import {
 
 import { HiOutlineDotsHorizontal } from 'react-icons/hi';
 import { Button } from '@/components/ui/button';
-import { useDeleteCommentOnPostMutation } from './postSlice';
-import { Label } from '@/components/ui/label';
-import { Input } from '@/components/ui/input';
+import {
+  useDeleteCommentOnPostMutation,
+  useEditCommentOnPostMutation,
+} from './postSlice';
+import { Textarea } from '@/components/ui/textarea';
 
 const Comment = ({ postId, comment, currentUserId, postUserId }) => {
   const [deleteCommentOnPost] = useDeleteCommentOnPostMutation();
+  const [editCommentOnPost] = useEditCommentOnPostMutation();
+  const [currentComment, setCurrentComment] = useState(comment?.content || '');
+  const nav = useNavigate();
+  const currPath = useLocation();
 
   const createdAt = comment.createdAt;
   const timeAgo = formatCommentDate(createdAt);
@@ -41,6 +47,15 @@ const Comment = ({ postId, comment, currentUserId, postUserId }) => {
     await deleteCommentOnPost({ postId, commentId: comment._id });
   };
 
+  const onClickHandlerForEditComment = async () => {
+    await editCommentOnPost({
+      postId,
+      commentId: comment._id,
+      content: currentComment,
+    });
+    console.log(currPath.pathname);
+    nav(currPath.pathname);
+  };
   // display delete? if user owned post or comment
   let displayDelete;
   if (currentUserId === commentUserId || currentUserId === postUserId) {
@@ -73,12 +88,13 @@ const Comment = ({ postId, comment, currentUserId, postUserId }) => {
     );
   }
 
+  // display edit
   let displayEdit;
   if (currentUserId === commentUserId) {
     displayEdit = (
       <Dialog>
         <DialogTrigger asChild>
-          <li className=" space-x-2 cursor-pointer hover:bg-slate-100 flex p-4 items-center">
+          <li className="space-x-2 cursor-pointer hover:bg-slate-100 flex p-4 items-center">
             <FaRegEdit />
             <p>Edit</p>
           </li>
@@ -90,21 +106,19 @@ const Comment = ({ postId, comment, currentUserId, postUserId }) => {
               Make changes to your posted comment. Click save when you're done.
             </DialogDescription>
           </DialogHeader>
-          <div className="grid gap-4 py-4">
-            <div className="grid grid-cols-4 items-center gap-4">
-              <Label htmlFor="content" className="text-right">
-                Content
-              </Label>
-              Content
-              <Input
-                id="Content"
-                defaultValue="Pedro Duarte"
-                className="col-span-3"
-              />
-            </div>
-          </div>
+          <Textarea
+            value={currentComment}
+            onChange={(e) => setCurrentComment(e.target.value)}
+          />
           <DialogFooter>
-            <Button type="submit">Save changes</Button>
+            <Button
+              type="submit"
+              disabled={currentComment ? false : true}
+              className="disabled:opacity-50"
+              onClick={onClickHandlerForEditComment}
+            >
+              Save changes
+            </Button>
           </DialogFooter>
         </DialogContent>
       </Dialog>
