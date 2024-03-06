@@ -24,9 +24,9 @@ export const getPost = async (req, res, next) => {
 };
 
 export const interactToPost = async (req, res, next) => {
-  const { userId, updateContent } = req.body;
+  const { userId, toUpdateContent } = req.body;
   const { id: postId } = req.params;
-  if (updateContent) return next();
+  if (toUpdateContent) return next();
   if (!postId || !userId) return res.sendStatus(400);
   try {
     const post = await Post.findOne({ _id: postId }).select('likes');
@@ -64,7 +64,14 @@ export const createPost = async (req, res) => {
 
 export const editPost = async (req, res) => {
   const { content, userId } = req.body;
-  if (!content || !userId) return res.sendStatus(400);
+  const { id } = req.params;
+  if (!content || !userId || !id) return res.sendStatus(400);
+  try {
+    await Post.findByIdAndUpdate(id, { content });
+    res.sendStatus(200);
+  } catch (error) {
+    res.status(500).json(error);
+  }
 };
 
 // CRUD ON COMMENT

@@ -19,6 +19,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from '@/components/ui/popover';
+import EditPopover from '@/src/comp/EditPopover';
 
 const Post = () => {
   const { postId } = useParams();
@@ -125,6 +126,12 @@ const Post = () => {
                   <FaVolumeMute />
                   <p>Mute</p>
                 </li>
+                <EditPopover
+                  key={post?._id}
+                  currentUserId={userId}
+                  post={post ?? null}
+                  postUserId={post?.userId}
+                />
               </ul>
             </PopoverContent>
           </Popover>
