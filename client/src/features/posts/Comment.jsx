@@ -32,6 +32,7 @@ import {
   useEditCommentOnPostMutation,
 } from './postSlice';
 import { Textarea } from '@/components/ui/textarea';
+import CustomPopover from '@/src/comp/EditPopover';
 
 const Comment = ({ postId, comment, currentUserId, postUserId }) => {
   const [deleteCommentOnPost] = useDeleteCommentOnPostMutation();
@@ -156,6 +157,7 @@ const Comment = ({ postId, comment, currentUserId, postUserId }) => {
             </div>
           </div>
         </Link>
+
         <div className="flex-1 flex justify-end items-start">
           <Popover>
             <PopoverTrigger

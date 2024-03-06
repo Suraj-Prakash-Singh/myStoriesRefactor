@@ -35,6 +35,13 @@ export const postsSlice = apiSlice.injectEndpoints({
       }),
       invalidatesTags: ['Posts'],
     }),
+    editPost: builder.mutation({
+      query: ({ userId, content, postId }) => ({
+        url: `/posts/${postId}`,
+        method: 'post',
+        body: { content, userId },
+      }),
+    }),
     interactToPost: builder.mutation({
       query: ({ postId, userId }) => ({
         url: `/posts/${postId}`,

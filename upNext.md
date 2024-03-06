@@ -28,3 +28,5 @@ Bugs:
 - didin't close all the poppers : <b>DONE</b>
 
 after editComment -> perform crud for posts
+
+<!-- create a way to separate -->

@@ -1,6 +1,7 @@
 import Comment from '../model/Comments.model.js';
 import Post from '../model/Posts.model.js';
 
+// CRUD ON POST
 export const getPosts = async (req, res) => {
   try {
     const posts = await Post.find();
@@ -22,9 +23,10 @@ export const getPost = async (req, res, next) => {
   }
 };
 
-export const interactToPost = async (req, res) => {
-  const { userId } = req.body;
+export const interactToPost = async (req, res, next) => {
+  const { userId, updateContent } = req.body;
   const { id: postId } = req.params;
+  if (updateContent) return next();
   if (!postId || !userId) return res.sendStatus(400);
   try {
     const post = await Post.findOne({ _id: postId }).select('likes');
@@ -58,6 +60,11 @@ export const createPost = async (req, res) => {
   const { content, userId } = req.body;
   await Post.create({ content, userId });
   res.status(201).json({ message: 'Successfully created' });
+};
+
+export const editPost = async (req, res) => {
+  const { content, userId } = req.body;
+  if (!content || !userId) return res.sendStatus(400);
 };
 
 // CRUD ON COMMENT

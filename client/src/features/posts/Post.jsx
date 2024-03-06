@@ -2,12 +2,23 @@ import React from 'react';
 import { useGetPostQuery, useInteractToPostMutation } from './postSlice';
 import { Link, useLocation, useNavigate, useParams } from 'react-router-dom';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { FaArrowLeft, FaRegComment, FaRegHeart, FaHeart } from 'react-icons/fa';
+import {
+  FaArrowLeft,
+  FaRegComment,
+  FaRegHeart,
+  FaHeart,
+  FaVolumeMute,
+} from 'react-icons/fa';
 import _404 from '@/src/pages/_404';
 import { HiOutlineDotsHorizontal } from 'react-icons/hi';
 import { formatDateTime } from '@/src/utils/formatDate';
 import Comment from './Comment';
 import PostComment from './PostComment';
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from '@/components/ui/popover';
 
 const Post = () => {
   const { postId } = useParams();
@@ -82,24 +93,41 @@ const Post = () => {
           <p className="font-semibold text-lg">Post</p>
         </Link>
       </div>
-      <div className="p-4 flex space-x-2 border-t">
-        <div>
-          <Avatar>
-            <AvatarImage src="https://github.com/shadcn.png" />
-            <AvatarFallback>CN</AvatarFallback>
-          </Avatar>
-        </div>
-        <div className="space-y-2">
-          <div className="space-x-1 flex items-center">
-            <Link className="font-semibold text-lg">Dale Cabarle</Link>
-            <Link className="text-sm text-slate-500">@MrDaleCabarle</Link>
+      <div className="p-4 flex justify-between border-t">
+        <div className="flex space-x-2">
+          <div>
+            <Avatar>
+              <AvatarImage src="https://github.com/shadcn.png" />
+              <AvatarFallback>CN</AvatarFallback>
+            </Avatar>
           </div>
-          {post?.content ? <p className="text-lg">{post.content}</p> : null}
-          {post?.createdAt ? (
-            <p className="text-slate-500 text-sm">
-              {formatDateTime(post.createdAt)}
-            </p>
-          ) : null}
+          <div className="space-y-2">
+            <div className="space-x-1 flex items-center">
+              <Link className="font-semibold text-lg">Dale Cabarle</Link>
+              <Link className="text-sm text-slate-500">@MrDaleCabarle</Link>
+            </div>
+            {post?.content ? <p className="text-lg">{post.content}</p> : null}
+            {post?.createdAt ? (
+              <p className="text-slate-500 text-sm">
+                {formatDateTime(post.createdAt)}
+              </p>
+            ) : null}
+          </div>
+        </div>
+        <div className="flex-1 flex justify-end items-start">
+          <Popover>
+            <PopoverTrigger className="p-4 hover:bg-[#1D9BF0] rounded-full hover:text-[#1D9BF0] hover:bg-opacity-20">
+              <HiOutlineDotsHorizontal className="text-lg" />
+            </PopoverTrigger>
+            <PopoverContent className="p-0">
+              <ul className="font-semibold">
+                <li className="space-x-2 cursor-pointer hover:bg-slate-100 flex p-4 items-center">
+                  <FaVolumeMute />
+                  <p>Mute</p>
+                </li>
+              </ul>
+            </PopoverContent>
+          </Popover>
         </div>
       </div>
       <div className="flex space-x-2 p-4 border-y text-xl justify-between">
@@ -118,9 +146,6 @@ const Post = () => {
             </div>
             <p className="group-hover:text-[#1D9BF0]">{commentsCount}</p>
           </div>
-        </div>
-        <div className="flex items-center">
-          <HiOutlineDotsHorizontal />
         </div>
       </div>
 
