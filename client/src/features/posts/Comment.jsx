@@ -33,11 +33,10 @@ import {
 } from './postSlice';
 import { Textarea } from '@/components/ui/textarea';
 import CustomPopover from '@/src/comp/EditPopover';
+import EditPopover from '@/src/comp/EditPopover';
 
 const Comment = ({ postId, comment, currentUserId, postUserId }) => {
   const [deleteCommentOnPost] = useDeleteCommentOnPostMutation();
-  const [editCommentOnPost] = useEditCommentOnPostMutation();
-  const [currentComment, setCurrentComment] = useState(comment?.content || '');
   const popOverRef = useRef();
 
   const updatedAt = comment.updatedAt;
@@ -46,15 +45,6 @@ const Comment = ({ postId, comment, currentUserId, postUserId }) => {
 
   const onClickHandlerForDeleteComment = async () => {
     await deleteCommentOnPost({ postId, commentId: comment._id });
-  };
-
-  const onClickHandlerForEditComment = async () => {
-    await editCommentOnPost({
-      postId,
-      commentId: comment._id,
-      content: currentComment,
-    });
-    popOverRef.current.click();
   };
 
   // display delete? if user owned post or comment
@@ -83,45 +73,6 @@ const Comment = ({ postId, comment, currentUserId, postUserId }) => {
             >
               Delete
             </Button>
-          </DialogFooter>
-        </DialogContent>
-      </Dialog>
-    );
-  }
-
-  // display edit
-  let displayEdit;
-  if (currentUserId === commentUserId) {
-    displayEdit = (
-      <Dialog>
-        <DialogTrigger asChild>
-          <li className="space-x-2 cursor-pointer hover:bg-slate-100 flex p-4 items-center">
-            <FaRegEdit />
-            <p>Edit</p>
-          </li>
-        </DialogTrigger>
-        <DialogContent className="sm:max-w-[425px]">
-          <DialogHeader>
-            <DialogTitle>Edit Comment</DialogTitle>
-            <DialogDescription>
-              Make changes to your posted comment. Click save when you're done.
-            </DialogDescription>
-          </DialogHeader>
-          <Textarea
-            value={currentComment}
-            onChange={(e) => setCurrentComment(e.target.value)}
-          />
-          <DialogFooter>
-            <DialogClose>
-              <Button
-                type="submit"
-                disabled={currentComment ? false : true}
-                className="disabled:opacity-50"
-                onClick={onClickHandlerForEditComment}
-              >
-                Save changes
-              </Button>
-            </DialogClose>
           </DialogFooter>
         </DialogContent>
       </Dialog>
@@ -169,7 +120,12 @@ const Comment = ({ postId, comment, currentUserId, postUserId }) => {
             <PopoverContent className="p-0">
               <ul className="font-semibold">
                 {displayDelete ?? null}
-                {displayEdit ?? null}
+                <EditPopover
+                  key={comment._id}
+                  currentUserId={currentUserId}
+                  comment={comment}
+                  postId={postId}
+                />
                 <li className="space-x-2 cursor-pointer hover:bg-slate-100 flex p-4 items-center">
                   <FaVolumeMute />
                   <p>Mute</p>

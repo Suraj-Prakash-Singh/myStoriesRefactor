@@ -129,8 +129,8 @@ const Post = () => {
                 <EditPopover
                   key={post?._id}
                   currentUserId={userId}
+                  postId={postId}
                   post={post ?? null}
-                  postUserId={post?.userId}
                 />
               </ul>
             </PopoverContent>

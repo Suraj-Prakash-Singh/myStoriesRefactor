@@ -19,13 +19,12 @@ import {
 
 const EditPopover = ({
   currentUserId,
-  postUserId,
+  postId,
   post = null,
   comment = null,
-  commentUserId = null,
 }) => {
-  const forPost = !commentUserId ? true : false;
-  const [data, setData] = useState(forPost ? post.content : comment.content);
+  const forPost = !comment ? true : false;
+  const [data, setData] = useState(forPost ? post?.content : comment?.content);
   const [editCommentOnPost] = useEditCommentOnPostMutation();
   const [editPost] = useEditPostMutation();
 
@@ -34,23 +33,26 @@ const EditPopover = ({
       return await editPost({
         userId: currentUserId,
         content: data,
-        postId: post._id,
+        postId,
         toUpdateContent: true,
       });
     }
 
     // if the edit element is for comment
     await editCommentOnPost({
-      postId: post._id,
+      postId,
       commentId: comment._id,
-      content: currentComment,
+      content: data,
     });
   };
 
   // display edit
   let displayEdit;
 
-  if (currentUserId === commentUserId || currentUserId === postUserId) {
+  if (
+    (comment?.userId && currentUserId === comment?.userId) ||
+    (post?.userId && currentUserId === post?.userId)
+  ) {
     displayEdit = (
       <Dialog>
         <DialogTrigger asChild>

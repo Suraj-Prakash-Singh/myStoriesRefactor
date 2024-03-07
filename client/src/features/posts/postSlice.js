@@ -59,7 +59,7 @@ export const postsSlice = apiSlice.injectEndpoints({
     }),
     commentOnPost: builder.mutation({
       query: ({ postId, userId, content }) => ({
-        url: `/posts/${postId}`,
+        url: `/posts/${postId}/comments`,
         method: 'post',
         body: { userId: userId, content },
       }),
