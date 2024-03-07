@@ -74,6 +74,18 @@ export const editPost = async (req, res) => {
   }
 };
 
+export const deletePost = async (req, res) => {
+  const { id } = req.params;
+  if (!id) return res.sendStatus(400);
+  try {
+    await Post.findByIdAndDelete(id);
+    await Comment.deleteMany({ postId: id });
+    res.sendStatus(200);
+  } catch (error) {
+    res.sendStatus(500);
+  }
+};
+
 // CRUD ON COMMENT
 export const commentOnPost = async (req, res) => {
   const { id } = req.params;
