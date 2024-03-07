@@ -126,7 +126,7 @@ export const editCommentOnPost = async (req, res) => {
 };
 
 export const deleteCommentOnPost = async (req, res) => {
-  const { commentId, postId: postId } = req.params;
+  const { commentId, id: postId } = req.params;
   if (!commentId || !postId) return res.sendStatus(400);
   try {
     await Comment.findByIdAndDelete(commentId);

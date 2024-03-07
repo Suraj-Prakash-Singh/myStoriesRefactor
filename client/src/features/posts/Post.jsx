@@ -20,12 +20,12 @@ import {
   PopoverTrigger,
 } from '@/components/ui/popover';
 import EditPopover from '@/src/comp/EditPopover';
+import DeletePopover from '@/src/comp/DeletePopover';
 
 const Post = () => {
   const { postId } = useParams();
   const [interactToPost] = useInteractToPostMutation();
   const nav = useNavigate();
-  const loc = useLocation();
   // this is coming from userSlice
   const userId = 'ponga';
 
@@ -122,16 +122,17 @@ const Post = () => {
             </PopoverTrigger>
             <PopoverContent className="p-0">
               <ul className="font-semibold">
-                <li className="space-x-2 cursor-pointer hover:bg-slate-100 flex p-4 items-center">
-                  <FaVolumeMute />
-                  <p>Mute</p>
-                </li>
+                <DeletePopover postId={postId} />
                 <EditPopover
                   key={post?._id}
                   currentUserId={userId}
                   postId={postId}
                   post={post ?? null}
                 />
+                <li className="space-x-2 cursor-pointer hover:bg-slate-100 flex p-4 items-center">
+                  <FaVolumeMute />
+                  <p>Mute</p>
+                </li>
               </ul>
             </PopoverContent>
           </Popover>

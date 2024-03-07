@@ -31,9 +31,8 @@ import {
   useDeleteCommentOnPostMutation,
   useEditCommentOnPostMutation,
 } from './postSlice';
-import { Textarea } from '@/components/ui/textarea';
-import CustomPopover from '@/src/comp/EditPopover';
 import EditPopover from '@/src/comp/EditPopover';
+import DeletePopover from '@/src/comp/DeletePopover';
 
 const Comment = ({ postId, comment, currentUserId, postUserId }) => {
   const [deleteCommentOnPost] = useDeleteCommentOnPostMutation();
@@ -119,9 +118,13 @@ const Comment = ({ postId, comment, currentUserId, postUserId }) => {
             </PopoverTrigger>
             <PopoverContent className="p-0">
               <ul className="font-semibold">
-                {displayDelete ?? null}
+                <DeletePopover
+                  comment={comment}
+                  postId={postId}
+                  postUserId={postUserId}
+                  currentUserId={currentUserId}
+                />
                 <EditPopover
-                  key={comment._id}
                   currentUserId={currentUserId}
                   comment={comment}
                   postId={postId}
