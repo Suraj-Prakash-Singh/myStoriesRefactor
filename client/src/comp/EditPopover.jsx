@@ -51,7 +51,7 @@ const EditPopover = ({
 
   if (
     (comment?.userId && currentUserId === comment?.userId) ||
-    (post?.userId && currentUserId === post?.userId)
+    (forPost && post?.userId && currentUserId === post?.userId)
   ) {
     displayEdit = (
       <Dialog>

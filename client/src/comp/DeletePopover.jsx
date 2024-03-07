@@ -15,6 +15,7 @@ import {
   useDeleteCommentOnPostMutation,
   useDeletePostMutation,
 } from '../features/posts/postSlice';
+import { useNavigate } from 'react-router-dom';
 
 // REFACTOR
 const DeletePopover = ({
@@ -26,17 +27,19 @@ const DeletePopover = ({
   const forPost = !comment ? true : false;
   const [deleteCommentOnPost] = useDeleteCommentOnPostMutation();
   const [deletePost] = useDeletePostMutation();
-
+  const nav = useNavigate();
   // delete post needs -> currentUserId, postId, postUserId
   // delete comment needs -> currentUserId, postId, comment postUserId
   const onClickHandler = async () => {
     if (forPost) {
-      return await deletePost({ postId });
+      await deletePost({ postId });
+      return nav('/');
     }
     await deleteCommentOnPost({ postId, commentId: comment._id });
   };
 
   let displayDelete;
+
   if (currentUserId === comment?.userId || currentUserId === postUserId) {
     displayDelete = (
       <Dialog>

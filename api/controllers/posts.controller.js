@@ -76,6 +76,7 @@ export const editPost = async (req, res) => {
 
 export const deletePost = async (req, res) => {
   const { id } = req.params;
+  console.log(id, ' delete post route');
   if (!id) return res.sendStatus(400);
   try {
     await Post.findByIdAndDelete(id);

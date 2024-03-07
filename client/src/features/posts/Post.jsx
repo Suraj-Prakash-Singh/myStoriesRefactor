@@ -122,9 +122,12 @@ const Post = () => {
             </PopoverTrigger>
             <PopoverContent className="p-0">
               <ul className="font-semibold">
-                <DeletePopover postId={postId} />
+                <DeletePopover
+                  postId={postId}
+                  currentUserId={userId}
+                  postUserId={post?.userId}
+                />
                 <EditPopover
-                  key={post?._id}
                   currentUserId={userId}
                   postId={postId}
                   post={post ?? null}

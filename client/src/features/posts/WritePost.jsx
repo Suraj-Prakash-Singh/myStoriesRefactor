@@ -5,7 +5,7 @@ const WritePost = () => {
   const [post, setPost] = useState('');
   const [createPost] = useCreatePostMutation();
 
-  const userId = 'ponga';
+  const userId = 'lil smoke';
   const onClickHandlerForCreatePost = async () => {
     await createPost({ content: post, userId });
     setPost('');

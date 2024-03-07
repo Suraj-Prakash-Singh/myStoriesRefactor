@@ -30,3 +30,7 @@ Bugs:
 after editComment -> perform crud for posts
 
 <!-- create a way to separate -->
+
+dummy names are in
+@writepost
+@post
