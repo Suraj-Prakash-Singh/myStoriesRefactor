@@ -1,6 +1,5 @@
 import React, { useRef, useState } from 'react';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { FaRegComment, FaRegHeart, FaVolumeMute } from 'react-icons/fa';
 import { formatCommentDate } from '@/src/utils/formatDate';
 import {

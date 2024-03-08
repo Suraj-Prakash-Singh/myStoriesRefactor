@@ -27,10 +27,17 @@ Bugs:
 - didn't update the time ago : <b>DONE</b>
 - didin't close all the poppers : <b>DONE</b>
 
-after editComment -> perform crud for posts
+- after editComment -> perform crud for posts <b>DONE</b>
 
-<!-- create a way to separate -->
+- REFACTOR B4 implementing user and authentication
 
-dummy names are in
-@writepost
+1. create a dedicated slice for comment so it will lessen the code of postSlice
+2. naming params and args should be consistent in slice
+3. why my popovers have different needs
+4. TBA
+
+##### notes:
+
+dummy names are in <br>
+@writepost <br>
 @post
