@@ -20,7 +20,7 @@ const Comment = ({ postId, comment, currentUserId, postUserId }) => {
   const timeAgo = formatCommentDate(updatedAt);
 
   return (
-    <div className="p-4 flex cursor-pointer space-x-2 hover:bg-slate-100 border-t">
+    <div className="p-4 flex max-w-full cursor-pointer space-x-2 hover:bg-slate-100 border-t whitespace-normal text-wrap">
       <div>
         <Avatar>
           <AvatarImage src="https://github.com/shadcn.png" />
@@ -28,14 +28,14 @@ const Comment = ({ postId, comment, currentUserId, postUserId }) => {
         </Avatar>
       </div>
       {/* if needed i can treat comment as a post aswell */}
-      <Link to={`/profile/posts/${postId}`} className="space-y-1">
+      <div to={`/profile/posts/${postId}`} className="space-y-1">
         <div className="space-x-1 flex items-center">
           <p className="font-semibold text-lg">Dale Cabarle</p>
           <p className="text-sm text-slate-500">@MrDaleCabarle</p>
           <p className="text-sm text-slate-500">· {timeAgo}</p>
         </div>
 
-        <div className="whitespace-normal">{comment.content}</div>
+        <div className="whitespace-normal max-w-full">{comment.content}</div>
         <div className="flex space-x-2">
           <div className="text-slate-500 flex space-x-1 items-center">
             <FaRegHeart />
@@ -46,7 +46,7 @@ const Comment = ({ postId, comment, currentUserId, postUserId }) => {
             <p>44</p>
           </div>
         </div>
-      </Link>
+      </div>
 
       <div className="flex-1 flex justify-end items-start">
         <Popover>
