@@ -111,7 +111,7 @@ export const getPostComments = async (req, res) => {
   const { id } = req.params;
 
   const comments = await Comment.find({ postId: id }).sort({ createdAt: -1 });
-  res.json({ ...post._doc, comments });
+  res.json({ ...post?._doc, comments });
 };
 
 export const editCommentOnPost = async (req, res) => {

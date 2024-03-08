@@ -95,7 +95,7 @@ const Comment = ({ postId, comment, currentUserId, postUserId }) => {
             <p className="text-sm text-slate-500">· {timeAgo}</p>
           </div>
 
-          <p>{comment.content}</p>
+          <p className="whitespace-break-spaces">{comment.content}</p>
           <div className="flex space-x-2">
             <div className="text-slate-500 flex space-x-1 items-center">
               <FaRegHeart />

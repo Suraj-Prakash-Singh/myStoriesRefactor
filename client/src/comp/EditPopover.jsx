@@ -10,7 +10,7 @@ import {
   DialogClose,
 } from '@/components/ui/dialog';
 import { FaRegEdit } from 'react-icons/fa';
-import { Button } from '@/components/ui/button';
+import { Button, buttonVariants } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
 import {
   useEditCommentOnPostMutation,
@@ -22,28 +22,31 @@ const EditPopover = ({
   postId,
   post = null,
   comment = null,
+  popOverRef,
 }) => {
   const forPost = !comment ? true : false;
   const [data, setData] = useState(forPost ? post?.content : comment?.content);
+
   const [editCommentOnPost] = useEditCommentOnPostMutation();
   const [editPost] = useEditPostMutation();
 
   const onClickHandler = async () => {
     if (forPost) {
-      return await editPost({
+      await editPost({
         userId: currentUserId,
         content: data,
         postId,
         toUpdateContent: true,
       });
+    } else {
+      // if the edit element is for comment
+      await editCommentOnPost({
+        postId,
+        commentId: comment._id,
+        content: data,
+      });
     }
-
-    // if the edit element is for comment
-    await editCommentOnPost({
-      postId,
-      commentId: comment._id,
-      content: data,
-    });
+    popOverRef?.current.click();
   };
 
   // display edit
@@ -73,14 +76,13 @@ const EditPopover = ({
           <Textarea value={data} onChange={(e) => setData(e.target.value)} />
           <DialogFooter>
             <DialogClose>
-              <Button
-                type="submit"
+              <div
                 disabled={data ? false : true}
-                className="disabled:opacity-50"
+                className={buttonVariants({ variant: '' })}
                 onClick={onClickHandler}
               >
                 Save changes
-              </Button>
+              </div>
             </DialogClose>
           </DialogFooter>
         </DialogContent>
@@ -88,7 +90,7 @@ const EditPopover = ({
     );
   }
 
-  return <>{displayEdit ?? null}</>;
+  return <div>{displayEdit ?? null}</div>;
 };
 
 export default EditPopover;

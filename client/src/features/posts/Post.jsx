@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { useGetPostQuery, useInteractToPostMutation } from './postSlice';
 import { Link, useLocation, useNavigate, useParams } from 'react-router-dom';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
@@ -18,6 +18,7 @@ import {
   Popover,
   PopoverContent,
   PopoverTrigger,
+  PopoverClose,
 } from '@/components/ui/popover';
 import EditPopover from '@/src/comp/EditPopover';
 import DeletePopover from '@/src/comp/DeletePopover';
@@ -26,6 +27,7 @@ const Post = () => {
   const { postId } = useParams();
   const [interactToPost] = useInteractToPostMutation();
   const nav = useNavigate();
+  const popOverRef = useRef(null);
   // this is coming from userSlice
   const userId = 'ponga';
 
@@ -117,7 +119,10 @@ const Post = () => {
         </div>
         <div className="flex-1 flex justify-end items-start">
           <Popover>
-            <PopoverTrigger className="p-4 hover:bg-[#1D9BF0] rounded-full hover:text-[#1D9BF0] hover:bg-opacity-20">
+            <PopoverTrigger
+              className="p-4 hover:bg-[#1D9BF0] rounded-full hover:text-[#1D9BF0] hover:bg-opacity-20"
+              ref={popOverRef}
+            >
               <HiOutlineDotsHorizontal className="text-lg" />
             </PopoverTrigger>
             <PopoverContent className="p-0">
@@ -131,6 +136,7 @@ const Post = () => {
                   currentUserId={userId}
                   postId={postId}
                   post={post ?? null}
+                  popOverRef={popOverRef}
                 />
                 <li className="space-x-2 cursor-pointer hover:bg-slate-100 flex p-4 items-center">
                   <FaVolumeMute />
@@ -138,6 +144,7 @@ const Post = () => {
                 </li>
               </ul>
             </PopoverContent>
+            <PopoverClose ref={popOverRef} />
           </Popover>
         </div>
       </div>
