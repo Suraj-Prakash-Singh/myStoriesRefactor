@@ -64,38 +64,6 @@ export const postsSlice = apiSlice.injectEndpoints({
         { type: 'Posts', id: args.postId },
       ],
     }),
-    commentOnPost: builder.mutation({
-      query: ({ postId, userId, content }) => ({
-        url: `/posts/${postId}/comments`,
-        method: 'post',
-        body: { userId: userId, content },
-      }),
-      invalidatesTags: (res, err, args) => [
-        'Posts',
-        { type: 'Posts', id: args.postId },
-      ],
-    }),
-    editCommentOnPost: builder.mutation({
-      query: ({ postId, commentId, content }) => ({
-        url: `posts/${postId}/comments/${commentId}`,
-        body: { content },
-        method: 'put',
-      }),
-      invalidatesTags: (res, err, args) => [
-        'Posts',
-        { type: 'Posts', id: args.postId },
-      ],
-    }),
-    deleteCommentOnPost: builder.mutation({
-      query: ({ postId, commentId }) => ({
-        url: `posts/${postId}/comments/${commentId}`,
-        method: 'delete',
-      }),
-      invalidatesTags: (res, err, args) => [
-        'Posts',
-        { type: 'Posts', id: args.postId },
-      ],
-    }),
   }),
 });
 
@@ -122,7 +90,4 @@ export const {
   useInteractToPostMutation,
   useEditPostMutation,
   useDeletePostMutation,
-  useCommentOnPostMutation,
-  useDeleteCommentOnPostMutation,
-  useEditCommentOnPostMutation,
 } = postsSlice;

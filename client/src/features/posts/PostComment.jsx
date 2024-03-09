@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { useCommentOnPostMutation } from './postSlice';
+import { useCommentOnPostMutation } from '../comments/commentSlice';
 
 const PostComment = ({ postId, userId }) => {
   const [comment, setComment] = useState('');

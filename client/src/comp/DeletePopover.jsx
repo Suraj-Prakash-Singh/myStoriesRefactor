@@ -11,11 +11,9 @@ import {
 
 import { Button } from '@/components/ui/button';
 import { FaTrashAlt } from 'react-icons/fa';
-import {
-  useDeleteCommentOnPostMutation,
-  useDeletePostMutation,
-} from '../features/posts/postSlice';
+import { useDeletePostMutation } from '../features/posts/postSlice';
 import { useNavigate } from 'react-router-dom';
+import { useDeleteCommentOnPostMutation } from '../features/comments/commentSlice';
 
 // REFACTOR
 const DeletePopover = ({

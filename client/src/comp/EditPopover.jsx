@@ -12,10 +12,8 @@ import {
 import { FaRegEdit } from 'react-icons/fa';
 import { Button, buttonVariants } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
-import {
-  useEditCommentOnPostMutation,
-  useEditPostMutation,
-} from '../features/posts/postSlice';
+import { useEditPostMutation } from '../features/posts/postSlice';
+import { useEditCommentOnPostMutation } from '../features/comments/commentSlice';
 
 const EditPopover = ({
   currentUserId,
