@@ -31,9 +31,8 @@ Bugs:
 
 - REFACTOR B4 implementing user and authentication
 
-1. create a dedicated slice for comment so it will lessen the code of postSlice
-2. naming params and args should be consistent in slice
-3. why my popovers have different needs
+1. create a dedicated slice for comment so it will lessen the code of postSlice <b>DONE</b>
+2. naming params and args should be consistent in slice <b>DONE</b>
 4. TBA
 
 ##### notes:
