@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { X } from 'lucide-react';
 import {
   Dialog,
   DialogContent,
@@ -9,8 +10,9 @@ import {
   DialogFooter,
   DialogClose,
 } from '@/components/ui/dialog';
+
 import { FaRegEdit } from 'react-icons/fa';
-import { Button, buttonVariants } from '@/components/ui/button';
+import { buttonVariants } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
 import { useEditPostMutation } from '../features/posts/postSlice';
 import { useEditCommentOnPostMutation } from '../features/comments/commentSlice';
@@ -56,15 +58,31 @@ const EditPopover = ({
   ) {
     displayEdit = (
       <Dialog>
-        <DialogTrigger asChild>
+        <DialogTrigger asChild={true}>
           <li className="space-x-2 cursor-pointer hover:bg-slate-100 flex p-4 items-center">
             <FaRegEdit />
             <p>Edit</p>
           </li>
         </DialogTrigger>
-        <DialogContent className="sm:max-w-[425px]">
+        <DialogContent
+          className="sm:max-w-[425px]"
+          onPointerDownOutside={(e) => {
+            e.preventDefault();
+          }}
+        >
           <DialogHeader>
-            <DialogTitle>Edit {forPost ? 'Post' : 'Comment'} </DialogTitle>
+            <DialogTitle className="flex justify-between">
+              <p>Edit {forPost ? 'Post' : 'Comment'}</p>
+              <DialogClose
+                className="absolute right-4 top-4 rounded-sm opacity-70 ring-offset-white transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-slate-950 focus:ring-offset-2 disabled:pointer-events-none data-[state=open]:bg-slate-100 data-[state=open]:text-slate-500 dark:ring-offset-slate-950 dark:focus:ring-slate-300 dark:data-[state=open]:bg-slate-800 dark:data-[state=open]:text-slate-400"
+                onClick={() => {
+                  popOverRef?.current.click();
+                }}
+              >
+                <X className="h-4 w-4" />
+                <span className="sr-only">Close</span>
+              </DialogClose>
+            </DialogTitle>
             <DialogDescription>
               {forPost
                 ? 'Make changes to your post'
@@ -73,15 +91,13 @@ const EditPopover = ({
           </DialogHeader>
           <Textarea value={data} onChange={(e) => setData(e.target.value)} />
           <DialogFooter>
-            <DialogClose>
-              <div
-                disabled={data ? false : true}
-                className={buttonVariants({ variant: '' })}
-                onClick={onClickHandler}
-              >
-                Save changes
-              </div>
-            </DialogClose>
+            <button
+              disabled={data ? false : true}
+              className={buttonVariants({ variant: '' })}
+              onClick={onClickHandler}
+            >
+              Save changes
+            </button>
           </DialogFooter>
         </DialogContent>
       </Dialog>

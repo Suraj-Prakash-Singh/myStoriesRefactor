@@ -62,6 +62,7 @@ const Comment = ({ postId, comment, currentUserId, postUserId }) => {
                 postId={postId}
                 postUserId={postUserId}
                 currentUserId={currentUserId}
+                popOverRef={popOverRef}
               />
               <EditPopover
                 currentUserId={currentUserId}

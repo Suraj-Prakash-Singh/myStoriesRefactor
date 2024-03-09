@@ -33,7 +33,7 @@ Bugs:
 
 1. create a dedicated slice for comment so it will lessen the code of postSlice <b>DONE</b>
 2. naming params and args should be consistent in slice <b>DONE</b>
-4. TBA
+3. TBA
 
 ##### notes:
 

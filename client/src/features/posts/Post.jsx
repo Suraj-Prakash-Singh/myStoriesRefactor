@@ -131,6 +131,7 @@ const Post = () => {
                   postId={postId}
                   currentUserId={userId}
                   postUserId={post?.userId}
+                  popOverRef={popOverRef}
                 />
                 <EditPopover
                   currentUserId={userId}
@@ -144,7 +145,6 @@ const Post = () => {
                 </li>
               </ul>
             </PopoverContent>
-            <PopoverClose ref={popOverRef} />
           </Popover>
         </div>
       </div>
