@@ -35,6 +35,8 @@ Bugs:
 2. naming params and args should be consistent in slice <b>DONE</b>
 3. TBA
 
+- create authSlice na ako.
+
 ##### notes:
 
 dummy names are in <br>
