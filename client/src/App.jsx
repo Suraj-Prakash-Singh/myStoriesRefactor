@@ -9,6 +9,7 @@ import Profile from './pages/Profile';
 import Layout from './comp/Layout';
 import Post from './features/posts/Post';
 import _404 from './pages/_404';
+import Signup from './features/auth/Signup';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -19,8 +20,9 @@ const router = createBrowserRouter(
           <Route index element={<Profile />} />
           <Route path="posts/:postId" element={<Post />} />
         </Route>
-        <Route path="*" element={<_404 />}></Route>
       </Route>
+      <Route path="signup" element={<Signup />} />
+      <Route path="*" element={<_404 />}></Route>
     </Route>
   )
 );
