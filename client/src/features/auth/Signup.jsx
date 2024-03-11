@@ -16,6 +16,10 @@ const Signup = () => {
     picture: null,
   });
   const [error, setError] = useState([]);
+
+  // check if all of the required states have value
+  const canSubmit = [username, email, password].every(Boolean);
+
   const { getRootProps, getInputProps, isDragActive, isDragReject } =
     useDropzone({
       accept: {
@@ -28,14 +32,30 @@ const Signup = () => {
 
         // get the first error that occur in this conditional if
         if (acceptedFiles.length > 1) {
-          setError([fileErrors[0]]);
+          setError((existingError) => {
+            const fieldsRequired = existingError.find(
+              (e) => e.code === 'fields-required'
+            );
+            const err = fieldsRequired
+              ? [fieldsRequired, fileErrors[0]]
+              : [fileErrors[0]];
+              here na me
+            return err;
+          });
         }
 
         if (acceptedFiles.length === 1 && fileErrors) {
-          setError((oldVal) => {
-            return fileErrors.length > 1
-              ? fileErrors.map((e) => e)
-              : [fileErrors[0]];
+          setError((existingError) => {
+            const fieldsRequired = existingError.find(
+              (e) => e.code === 'fields-required'
+            );
+            const toAddErrors =
+              fileErrors.length > 1
+                ? fileErrors.map((e) => e)
+                : [fileErrors[0]];
+            return fieldsRequired
+              ? [fieldsRequired, ...toAddErrors]
+              : [...toAddErrors];
           });
         }
         setFile({
@@ -46,7 +66,15 @@ const Signup = () => {
       onDropAccepted: (acceptedFiles) => {
         const file = acceptedFiles[0];
         const preview = URL.createObjectURL(file);
-        setError([]);
+
+        // we want the fieldsRequired error to persist if it exist because we are modifying the drag n drop and not the inputs
+        setError((existingError) => {
+          const fieldsRequired = existingError.find(
+            (e) => e.code === 'fields-required'
+          );
+
+          return fieldsRequired ? [fieldsRequired] : [];
+        });
         setFile({ picture: file, previewImage: preview });
       },
     });
@@ -60,7 +88,17 @@ const Signup = () => {
   };
 
   const handleSubmit = () => {
-    console.log(previewImage[0]);
+    if (!canSubmit) {
+      setError((existingError) => [
+        ...existingError,
+        {
+          code: 'fields-required',
+          message: 'Username, email and password are required',
+        },
+      ]);
+      return;
+    }
+    console.log('hey you can now create endpoint!!');
   };
   return (
     <div className="min-h-[100vh] flex justify-center items-center bg-[#F2F2F2]">
@@ -81,6 +119,7 @@ const Signup = () => {
           <Input
             type="email"
             name="emil"
+            required
             onChange={(e) => setEmail(e.target.value)}
             placeholder="Email"
           />

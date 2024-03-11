@@ -42,3 +42,9 @@ Bugs:
 dummy names are in <br>
 @writepost <br>
 @post
+
+##### future refactors
+
+1. sign up
+
+- error state. there's a lot of repetition of logic
