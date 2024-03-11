@@ -5,15 +5,6 @@ import { Button } from '@/components/ui/button';
 import { useDropzone } from 'react-dropzone';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 
-import {
-  Table,
-  TableBody,
-  TableCaption,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from '@/components/ui/table';
 import { X } from 'lucide-react';
 
 const Signup = () => {
@@ -24,16 +15,28 @@ const Signup = () => {
     previewImage: null,
     picture: null,
   });
-  const [error, setError] = useState('');
+  const [error, setError] = useState([]);
   const { getRootProps, getInputProps, isDragActive, isDragReject } =
     useDropzone({
       accept: {
         'image/jpeg': ['.jpeg', '.jpg', '.png'],
       },
       maxFiles: 1,
+      maxSize: 2097152,
       onDropRejected: (acceptedFiles) => {
+        const fileErrors = acceptedFiles[0].errors;
+
+        // get the first error that occur in this conditional if
         if (acceptedFiles.length > 1) {
-          setError('Please only input one picture for your profile');
+          setError([fileErrors[0]]);
+        }
+
+        if (acceptedFiles.length === 1 && fileErrors) {
+          setError((oldVal) => {
+            return fileErrors.length > 1
+              ? fileErrors.map((e) => e)
+              : [fileErrors[0]];
+          });
         }
         setFile({
           previewImage: null,
@@ -43,13 +46,13 @@ const Signup = () => {
       onDropAccepted: (acceptedFiles) => {
         const file = acceptedFiles[0];
         const preview = URL.createObjectURL(file);
-        setError('');
+        setError([]);
         setFile({ picture: file, previewImage: preview });
       },
     });
 
   const handleRemoveInputPicture = () => {
-    setError('');
+    setError([]);
     setFile({
       previewImage: null,
       picture: null,
@@ -140,7 +143,15 @@ const Signup = () => {
               </div>
             )}
           </div>
-          {error && <p className="text-sm text-red-500">{error}</p>}
+          {error.length >= 1 && (
+            <ul>
+              {error.map((e) => (
+                <li key={e.code} className="text-sm text-red-500">
+                  {e.message}
+                </li>
+              ))}
+            </ul>
+          )}
           <Button
             onClick={handleSubmit}
             className="mt-6 bg-blue-500 text-white hover:bg-blue-600 px-4 py-2 rounded-md transition duration-300"
@@ -148,24 +159,6 @@ const Signup = () => {
             Submit
           </Button>
         </div>
-        {/* <div className="grid w-full items-center gap-1.5">
-            <Label htmlFor="picture">Profile picture (Optional)</Label>
-            <div {...getRootProps()}>
-              <input {...getInputProps()} />
-              {isDragActive ? (
-                <p>Drop the files here ...</p>
-              ) : (
-                <p>Drag and drop an image here, or click to select a file</p>
-              )}
-            </div>
-            {previewImage && (
-              <div>
-                <img src={previewImage} alt="Preview" className="" />
-              </div>
-            )}
-          </div>
-          <Button onClick={handleSubmit}>Submit</Button>
-        </div> */}
       </div>
     </div>
   );
