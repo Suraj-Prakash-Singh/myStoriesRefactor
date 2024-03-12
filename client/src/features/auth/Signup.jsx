@@ -90,15 +90,23 @@ const Signup = () => {
 
   const handleSubmit = () => {
     if (!canSubmit) {
-      setError((existingError) => [
-        ...existingError,
-        {
-          code: 'fields-required',
-          message: 'Username, email and password are required',
-        },
-      ]);
+      setError((existingError) => {
+        const fieldsRequiredError = existingError.find(
+          (e) => e.code === 'fields-required'
+        );
+        return fieldsRequiredError
+          ? [...existingError]
+          : [
+              ...existingError,
+              {
+                code: 'fields-required',
+                message: 'Username, email and password are required',
+              },
+            ];
+      });
       return;
     }
+
     console.log('hey you can now create endpoint!!');
   };
   return (
