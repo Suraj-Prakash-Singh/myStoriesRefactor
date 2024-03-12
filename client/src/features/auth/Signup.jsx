@@ -29,7 +29,6 @@ const Signup = () => {
       maxSize: 2097152,
       onDropRejected: (acceptedFiles) => {
         const fileErrors = acceptedFiles[0].errors;
-
         // get the first error that occur in this conditional if
         if (acceptedFiles.length > 1) {
           setError((existingError) => {
@@ -37,9 +36,11 @@ const Signup = () => {
               (e) => e.code === 'fields-required'
             );
             const err = fieldsRequired
-              ? [fieldsRequired, fileErrors[0]]
-              : [fileErrors[0]];
-              here na me
+              ? [
+                  fieldsRequired,
+                  { code: 'too-many-files', message: 'Too many files' },
+                ]
+              : [{ code: 'too-many-files', message: 'Too many files' }];
             return err;
           });
         }
@@ -67,7 +68,7 @@ const Signup = () => {
         const file = acceptedFiles[0];
         const preview = URL.createObjectURL(file);
 
-        // we want the fieldsRequired error to persist if it exist because we are modifying the drag n drop and not the inputs
+        // we want the fieldsRequired error to persist if it exist because we are modifying the drag n drop and not the inputs`
         setError((existingError) => {
           const fieldsRequired = existingError.find(
             (e) => e.code === 'fields-required'
@@ -145,13 +146,7 @@ const Signup = () => {
             >
               <input {...getInputProps()} />
               {isDragActive ? (
-                <>
-                  {isDragReject ? (
-                    <p className="text-red-500">Select</p>
-                  ) : (
-                    <p className="text-gray-400">Drop the files here...</p>
-                  )}
-                </>
+                <p className="text-gray-400">Drop the files here...</p>
               ) : (
                 <p className="text-gray-400">
                   Drag n Drop an image here, or click to select a file
