@@ -1,6 +1,7 @@
 export const signupController = (req, res) => {
-  console.log(req.body);
-  console.log(req.file);
-  console.log('this code run');
-  res.sendStatus(200);
+  const { username, email, password } = req.body;
+  if (!username || !email || !password) return res.sendStatus(400);
+  //create User schema
+  // const emailExist = User.find({ email });
+  res.sendStatus(201);
 };
