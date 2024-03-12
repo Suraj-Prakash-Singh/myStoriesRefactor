@@ -6,6 +6,7 @@ import { useDropzone } from 'react-dropzone';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 
 import { X } from 'lucide-react';
+import { useSignupMutation } from './authApiSlice';
 
 const Signup = () => {
   const [username, setUsername] = useState('');
@@ -16,7 +17,7 @@ const Signup = () => {
     picture: null,
   });
   const [error, setError] = useState([]);
-
+  const [signup] = useSignupMutation();
   // check if all of the required states have value
   const canSubmit = [username, email, password].every(Boolean);
 
@@ -88,7 +89,7 @@ const Signup = () => {
     });
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     if (!canSubmit) {
       setError((existingError) => {
         const fieldsRequiredError = existingError.find(
@@ -104,10 +105,13 @@ const Signup = () => {
               },
             ];
       });
-      return;
     }
-
-    console.log('hey you can now create endpoint!!');
+    const formData = new FormData();
+    formData.append('file', file.picture);
+    formData.append('username', username);
+    formData.append('email', email);
+    formData.append('password', password);
+    await signup(formData);
   };
   return (
     <div className="min-h-[100vh] flex justify-center items-center bg-[#F2F2F2]">
@@ -128,7 +132,6 @@ const Signup = () => {
           <Input
             type="email"
             name="emil"
-            required
             onChange={(e) => setEmail(e.target.value)}
             placeholder="Email"
           />
