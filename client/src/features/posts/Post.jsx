@@ -1,6 +1,6 @@
 import React, { useRef } from 'react';
 import { useGetPostQuery, useInteractToPostMutation } from './postSlice';
-import { Link, useLocation, useNavigate, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import {
   FaArrowLeft,
@@ -18,7 +18,6 @@ import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-  PopoverClose,
 } from '@/components/ui/popover';
 import EditPopover from '@/src/comp/EditPopover';
 import DeletePopover from '@/src/comp/DeletePopover';
@@ -35,7 +34,7 @@ const Post = () => {
   if (!postId) return nav('/');
 
   // query the post
-  const { isError, isLoading, isSuccess, data: post } = useGetPostQuery(postId);
+  const { isError, isSuccess, data: post } = useGetPostQuery(postId);
 
   // if post doesn't exist
   if (isError) return <_404 />;

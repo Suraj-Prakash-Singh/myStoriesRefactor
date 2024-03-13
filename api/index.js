@@ -4,7 +4,7 @@ import cors from 'cors';
 import cookieParser from 'cookie-parser';
 
 import mongoose from 'mongoose';
-import connectDb from './config/connectDB.js';
+import connectDb from './config/connectDb.js';
 import postsRouter from './routes/posts.route.js';
 import authRouter from './routes/auth.route.js';
 import corsOptions from './config/corsOption.js';

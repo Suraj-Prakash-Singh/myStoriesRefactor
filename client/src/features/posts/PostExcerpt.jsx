@@ -1,10 +1,8 @@
 import React from 'react';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { FaHeart, FaRegComment, FaRegHeart } from 'react-icons/fa';
-import { Link, useNavigate } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import {
-  selectPostById,
   useGetPostQuery,
   useInteractToPostMutation,
 } from './postSlice';

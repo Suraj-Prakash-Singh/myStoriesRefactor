@@ -1,5 +1,4 @@
 import React from 'react';
-import { Skeleton } from '@/components/ui/skeleton';
 import PostExcerpt from './PostExcerpt';
 import { useGetPostsQuery, selectPostsIds } from './postSlice';
 import { useSelector } from 'react-redux';

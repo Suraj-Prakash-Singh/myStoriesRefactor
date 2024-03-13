@@ -40,7 +40,6 @@ export function formatCommentDate(inputDateTime) {
   const timeDifferenceInMinutes = Math.floor(timeDifferenceInSeconds / 60);
   const timeDifferenceInHours = Math.floor(timeDifferenceInMinutes / 60);
   const timeDifferenceInDays = Math.floor(timeDifferenceInHours / 24);
-  const timeDifferenceInWeeks = Math.floor(timeDifferenceInDays / 7);
 
   if (timeDifferenceInSeconds === 0) {
     return 'just now';

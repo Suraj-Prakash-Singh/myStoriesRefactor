@@ -1,7 +1,5 @@
 import React from 'react';
 import { Skeleton } from '@/components/ui/skeleton';
-import { FaRegComment, FaRegHeart } from 'react-icons/fa';
-import { Link } from 'react-router-dom';
 
 const PostExcerptSkeleton = () => {
   return (
